@@ -2,7 +2,16 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				brand: {
+					DEFAULT: 'oklch(50.5% 0.213 27.518)',
+					light:   'oklch(57.7% 0.245 27.325)',
+					dark:    'oklch(45% 0.213 27.518)',
+					deep:    'oklch(30% 0.15 27.518)',
+				},
+			},
+		},
 	},
 	plugins: [],
 }

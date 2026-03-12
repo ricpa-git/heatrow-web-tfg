@@ -1,0 +1,87 @@
+---
+// Navbar + Ticker compartido en todas las páginas
+---
+
+<!-- Navbar -->
+<nav class="fixed top-0 w-full bg-black z-50 shadow-lg">
+  <div class="w-full px-8">
+    <div class="flex justify-between items-center h-32">
+      <div class="hidden md:flex gap-8">
+        <a href="/" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">EVENT</a>
+        <a href="/gallery" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">GALLERY</a>
+        <a href="/contact" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">CONTACT</a>
+        <a href="/tickets" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">TICKETS</a>
+      </div>
+
+      <!-- Logo centrado -->
+      <a href="/" class="absolute left-1/2 -translate-x-1/2">
+        <img src="/logo1.png" alt="Heatrow Club" class="h-28 w-auto" />
+      </a>
+
+      <!-- Hamburger — mobile only -->
+      <button id="mobile-menu-btn" class="md:hidden ml-auto text-[oklch(50.5%_0.213_27.518)] focus:outline-none z-10" aria-label="Abrir menú">
+        <svg id="icon-open" class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        <svg id="icon-close" class="w-7 h-7 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu dropdown -->
+  <div id="mobile-menu" class="hidden flex-col md:hidden absolute top-full left-0 right-0 bg-black border-t border-[oklch(50.5%_0.213_27.518)] z-50 px-8 py-6 gap-5">
+    <a href="/" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">EVENT</a>
+    <a href="/gallery" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">GALLERY</a>
+    <a href="/contact" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">CONTACT</a>
+    <a href="/tickets" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">TICKETS</a>
+  </div>
+</nav>
+
+<!-- Ticker / Marquee -->
+<div id="ticker-bar" class="fixed top-32 w-full z-40 overflow-hidden bg-[oklch(50.5%_0.213_27.518)] py-3 cursor-pointer">
+  <div class="ticker-track flex whitespace-nowrap">
+    <span class="ticker-content text-white font-bold uppercase text-sm tracking-widest">
+      HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp;
+    </span>
+    <span class="ticker-content text-white font-bold uppercase text-sm tracking-widest" aria-hidden="true">
+      HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 27/03 // &ldquo;BACK TO 2016!&rdquo; &nbsp;&mdash;&nbsp;
+    </span>
+  </div>
+</div>
+
+<style>
+  .ticker-track { animation: ticker 15s linear infinite; }
+  .ticker-track:hover { animation-play-state: paused; }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+</style>
+
+<script>
+  document.getElementById('ticker-bar')?.addEventListener('click', () => {
+    window.location.href = '/tickets';
+  });
+
+  const mobileBtn  = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const iconOpen   = document.getElementById('icon-open');
+  const iconClose  = document.getElementById('icon-close');
+
+  mobileBtn?.addEventListener('click', () => {
+    const isOpen = !mobileMenu?.classList.contains('hidden');
+    if (isOpen) {
+      mobileMenu?.classList.remove('flex');
+      mobileMenu?.classList.add('hidden');
+      iconOpen?.classList.remove('hidden');
+      iconClose?.classList.add('hidden');
+    } else {
+      mobileMenu?.classList.remove('hidden');
+      mobileMenu?.classList.add('flex');
+      iconOpen?.classList.add('hidden');
+      iconClose?.classList.remove('hidden');
+    }
+  });
+</script>

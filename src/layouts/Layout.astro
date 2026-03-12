@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import Navbar from './Navbar.astro';
+import Footer from './Footer.astro';
 
 interface Props {
 	title: string;
@@ -21,6 +23,8 @@ const { title, description = 'Heatrow Club - El evento de Hip Hop & Trap más ca
 		<title>{title}</title>
 	</head>
 	<body class="bg-black text-white">
+		<Navbar />
 		<slot />
+		<Footer />
 	</body>
 </html>

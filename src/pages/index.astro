@@ -2,7 +2,8 @@
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Heatrow Club | Hip Hop & Trap Madrid">
+
+<Layout title="HEATROW CLUB">
 
   <!--Estilos para que el logo gire -->
   <style>
@@ -36,7 +37,7 @@ import Layout from "../layouts/Layout.astro";
       loop
       playsinline
     >
-      <source src="/video.mp4" type="video/mp4" />
+      <source src="/video1.mp4" type="video/mp4" />
     </video>
     <!-- Overlay oscuro sobre el video -->
     <div class="absolute inset-0 bg-black/50"></div>
@@ -122,6 +123,7 @@ import Layout from "../layouts/Layout.astro";
     </div>
   </section>
 
+  <!-- Script para que funcione el carousel -->
   <script>
     const track = document.getElementById('carousel-track') as HTMLElement;
     const dots = document.querySelectorAll('.carousel-dot');
@@ -140,6 +142,7 @@ import Layout from "../layouts/Layout.astro";
     document.getElementById('carousel-next')?.addEventListener('click', () => goTo(current + 1));
     dots.forEach(dot => dot.addEventListener('click', (e) => goTo(Number((e.target as HTMLElement).dataset.index))));
   </script>
+
 
   <!-- Upcoming Events Section -->
   <section id="entradas" class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28">
@@ -169,6 +172,7 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div>
   </section>
+
 
   <!-- Expandable Cards
   <section class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)]">

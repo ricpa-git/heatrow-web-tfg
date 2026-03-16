@@ -8,7 +8,7 @@ interface Props {
 	description?: string;
 }
 
-const { title, description = 'Heatrow Club - El evento de Hip Hop & Trap más candente de Madrid' } = Astro.props;
+const { title, description = 'HEATROW CLUB' } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,8 +17,13 @@ const { title, description = 'Heatrow Club - El evento de Hip Hop & Trap más ca
 		<meta charset="UTF-8" />
 		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
+		<!-- Favicon para diferentes resoluciones -->
+		<link rel="icon" type="image/png" sizes="32x32" href="/favicon2.png" />
+		<link rel="icon" type="image/png" sizes="64x64" href="/favicon2.png" />
+		<link rel="icon" type="image/png" sizes="128x128" href="/favicon2.png" />
+		<link rel="icon" type="image/png" sizes="256x256" href="/favicon2.png" />
+		<!-- Si tienes SVG, puedes dejarlo como fallback -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>

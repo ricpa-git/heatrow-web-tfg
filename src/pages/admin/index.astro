@@ -1,0 +1,10 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import DashboardStats from '../../components/admin/Estadisticas.jsx';
+import BienvenidaUsuario from '../../components/admin/BienvenidaUsuario.jsx';
+---
+<AdminLayout title="Dashboard">
+  <h1 class="text-3xl font-bold mb-2">Panel de administración</h1>
+  <BienvenidaUsuario client:load />
+  <DashboardStats client:load />
+</AdminLayout>

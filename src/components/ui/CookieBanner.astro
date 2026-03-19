@@ -1,0 +1,36 @@
+---
+// Componente para mostrar aviso de cookies
+---
+
+<div id="cookie-banner" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-black text-white px-6 py-4 shadow-lg border border-[oklch(50.5%_0.213_27.518)] z-50 flex flex-col md:flex-row items-center gap-4" style="display: none;">
+  <span class="text-sm">Este sitio utiliza cookies técnicas, de análisis y de terceros para mejorar tu experiencia. <a href="/cookies" class="underline text-[oklch(50.5%_0.213_27.518)]">Más información</a></span>
+  <div class="flex gap-2 mt-2 md:mt-0">
+    <button id="cookie-accept" class="bg-[oklch(50.5%_0.213_27.518)] text-white px-4 py-2 font-bold text-xs uppercase tracking-widest hover:bg-[oklch(45%_0.213_27.518)] transition-colors">Aceptar</button>
+    <button id="cookie-reject" class="bg-zinc-700 text-white px-4 py-2 font-bold text-xs uppercase tracking-widest hover:bg-zinc-900 transition-colors">Rechazar</button>
+  </div>
+</div>
+
+<script>
+  // Mostrar el banner si no se ha aceptado ni rechazado
+  window.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('cookie-banner');
+    const acceptBtn = document.getElementById('cookie-accept');
+    const rejectBtn = document.getElementById('cookie-reject');
+    const cookiePref = localStorage.getItem('cookieAccepted');
+    if (banner && cookiePref !== 'true' && cookiePref !== 'false') {
+      banner.style.display = 'flex';
+    }
+    if (acceptBtn && banner) {
+      acceptBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieAccepted', 'true');
+        banner.style.display = 'none';
+      });
+    }
+    if (rejectBtn && banner) {
+      rejectBtn.addEventListener('click', () => {
+        localStorage.setItem('cookieAccepted', 'false');
+        banner.style.display = 'none';
+      });
+    }
+  });
+</script>

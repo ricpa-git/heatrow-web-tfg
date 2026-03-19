@@ -1,9 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import CookieBanner from "../components/ui/CookieBanner.astro";
 ---
 
-
-<Layout title="HEATROW CLUB">
+<Layout title="HEATROW CLUB | Home">
+  <!-- Cookie Banner -->
+  <CookieBanner />
 
   <!--Estilos para que el logo gire -->
   <style>
@@ -106,6 +108,16 @@ import Layout from "../layouts/Layout.astro";
           <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600" data-index="1"></button>
           <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600" data-index="2"></button>
         </div>
+      </div>
+
+      <!-- Botón Ver más fotos -->
+      <div class="flex justify-center mt-10">
+                    <a
+              href="/gallery"
+              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+            >
+              VER MÁS FOTOS
+            </a>
       </div>
 
       <!-- Texto About Us -->

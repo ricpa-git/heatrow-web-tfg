@@ -1,5 +1,12 @@
 ---
-// Navbar + Ticker compartido en todas las páginas
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { href: "/", label: "EVENT" },
+  { href: "/gallery", label: "GALLERY" },
+  { href: "/contact", label: "CONTACT" },
+  { href: "/tickets", label: "TICKETS" },
+];
 ---
 
 <!-- Navbar -->
@@ -7,10 +14,14 @@
   <div class="w-full px-8">
     <div class="flex justify-between items-center h-32">
       <div class="hidden md:flex gap-8">
-        <a href="/" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">EVENT</a>
-        <a href="/gallery" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">GALLERY</a>
-        <a href="/contact" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">CONTACT</a>
-        <a href="/tickets" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors">TICKETS</a>
+        {navLinks.map(link => (
+          <a
+            href={link.href}
+            class={`font-semibold transition-colors ${currentPath === link.href ? "text-white underline underline-offset-4" : "text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)]"}`}
+          >
+            {link.label}
+          </a>
+        ))}
       </div>
 
       <!-- Logo centrado -->
@@ -32,10 +43,14 @@
 
   <!-- Mobile menu dropdown -->
   <div id="mobile-menu" class="hidden flex-col md:hidden absolute top-full left-0 right-0 bg-black border-t border-[oklch(50.5%_0.213_27.518)] z-50 px-8 py-6 gap-5">
-    <a href="/" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">EVENT</a>
-    <a href="/gallery" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">GALLERY</a>
-    <a href="/contact" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">CONTACT</a>
-    <a href="/tickets" class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] font-semibold transition-colors py-2">TICKETS</a>
+    {navLinks.map(link => (
+      <a
+        href={link.href}
+        class={`font-semibold transition-colors py-2 ${currentPath === link.href ? "text-white underline underline-offset-4" : "text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)]"}`}
+      >
+        {link.label}
+      </a>
+    ))}
   </div>
 </nav>
 

@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import CookieBanner from "../components/ui/CookieBanner.astro";
+import DjsSection from "../components/ui/DjsSection.jsx";
 ---
 
 <Layout title="HEATROW CLUB | Home">
@@ -10,15 +11,23 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
   <!--Estilos para que el logo gire -->
   <style>
     @keyframes spin-slow {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
     .animate-spin-slow {
       animation: spin-slow 8s linear infinite;
     }
     @keyframes flip3d {
-      0%   { transform: perspective(600px) rotateY(0deg); }
-      100% { transform: perspective(600px) rotateY(360deg); }
+      0% {
+        transform: perspective(600px) rotateY(0deg);
+      }
+      100% {
+        transform: perspective(600px) rotateY(360deg);
+      }
     }
     .animate-flip3d {
       animation: flip3d 4s linear infinite;
@@ -66,70 +75,122 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
   </section>
 
   <!--ABOUT US -->
-  <section id="galeria" class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28">
+  <section
+    id="galeria"
+    class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28"
+  >
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl md:text-6xl font-black mb-4 text-center text-[oklch(50.5%_0.213_27.518)]">ABOUT US</h2>
+      <h2
+        class="text-4xl md:text-6xl font-black mb-4 text-center text-[oklch(50.5%_0.213_27.518)]"
+      >
+        ABOUT US
+      </h2>
       <div class="w-32 h-1 bg-[oklch(50.5%_0.213_27.518)] mx-auto mb-16"></div>
 
       <!-- Carousel -->
       <div class="relative overflow-hidden" id="carousel">
-        <div class="carousel-inner flex transition-transform duration-500 ease-in-out" id="carousel-track">
+        <div
+          class="carousel-inner flex transition-transform duration-500 ease-in-out"
+          id="carousel-track"
+        >
           <!-- Slide 1 -->
           <div class="carousel-slide min-w-full">
-            <div class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700">
-              <span class="text-zinc-600 text-xl font-bold uppercase tracking-widest">Foto 1</span>
+            <div
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+            >
+              <img
+                src="../../public/gallery/foto5.png"
+                class="w-full h-full object-cover"
+                alt="Foto 1"
+              />
             </div>
           </div>
           <!-- Slide 2 -->
           <div class="carousel-slide min-w-full">
-            <div class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700">
-              <span class="text-zinc-600 text-xl font-bold uppercase tracking-widest">Foto 2</span>
+            <div
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+            >
+              <!-- Sustituye el span por una imagen si la agregas, con el mismo estilo -->
+              <img
+                src="../../public/gallery/foto1.png"
+                class="w-full h-full object-cover"
+                alt="Foto 2"
+              />
             </div>
           </div>
           <!-- Slide 3 -->
           <div class="carousel-slide min-w-full">
-            <div class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700">
-              <span class="text-zinc-600 text-xl font-bold uppercase tracking-widest">Foto 3</span>
+            <div
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+            >
+              <!-- Sustituye el span por una imagen si la agregas, con el mismo estilo -->
+              <img
+                src="../../public/gallery/foto4.png"
+                class="w-full h-full object-cover"
+                alt="Foto 3"
+              />
             </div>
           </div>
         </div>
 
         <!-- Prev / Next buttons -->
-        <button id="carousel-prev" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[oklch(50.5%_0.213_27.518)] text-white w-10 h-10 flex items-center justify-center transition-colors">
+        <button
+          id="carousel-prev"
+          class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[oklch(50.5%_0.213_27.518)] text-white w-10 h-10 flex items-center justify-center transition-colors"
+        >
           &#8592;
         </button>
-        <button id="carousel-next" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[oklch(50.5%_0.213_27.518)] text-white w-10 h-10 flex items-center justify-center transition-colors">
+        <button
+          id="carousel-next"
+          class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-[oklch(50.5%_0.213_27.518)] text-white w-10 h-10 flex items-center justify-center transition-colors"
+        >
           &#8594;
         </button>
 
         <!-- Dots -->
         <div class="flex justify-center gap-2 mt-6">
-          <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-[oklch(50.5%_0.213_27.518)]" data-index="0"></button>
-          <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600" data-index="1"></button>
-          <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600" data-index="2"></button>
+          <button
+            class="carousel-dot w-2.5 h-2.5 rounded-full bg-[oklch(50.5%_0.213_27.518)]"
+            data-index="0"></button>
+          <button
+            class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600"
+            data-index="1"></button>
+          <button
+            class="carousel-dot w-2.5 h-2.5 rounded-full bg-zinc-600"
+            data-index="2"></button>
         </div>
       </div>
 
       <!-- Botón Ver más fotos -->
       <div class="flex justify-center mt-10">
-                    <a
-              href="/gallery"
-              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-            >
-              VER MÁS FOTOS
-            </a>
+        <a
+          href="/gallery"
+          class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+        >
+          VER MÁS FOTOS
+        </a>
       </div>
 
       <!-- Texto About Us -->
       <div class="max-w-3xl mx-auto mt-16 text-center space-y-6">
         <p class="text-gray-300 text-lg leading-relaxed">
-          Ubicada en la latente ciudad de Madrid, Heat Row es un proyecto que nace con la ambición de generar una comunidad de la mano del Hip-hop, el Trap y el Rap. Nuestro objetivo es hacer eco de este sonido y que las personas sientan que tienen un hogar al que ir, disfrutar y pertenecer. Esta idea emerge del sentimiento común de un grupo de amigos que motivados por una misma pasión desean compartirla y alimentarla con más gente en el camino, generando un ambiente positivo y cargado de energía.
+          Ubicada en la latente ciudad de Madrid, Heat Row es un proyecto que
+          nace con la ambición de generar una comunidad de la mano del Hip-hop,
+          el Trap y el Rap. Nuestro objetivo es hacer eco de este sonido y que
+          las personas sientan que tienen un hogar al que ir, disfrutar y
+          pertenecer. Esta idea emerge del sentimiento común de un grupo de
+          amigos que motivados por una misma pasión desean compartirla y
+          alimentarla con más gente en el camino, generando un ambiente positivo
+          y cargado de energía.
         </p>
         <p class="text-gray-300 text-lg leading-relaxed">
-          Desde un "Mosh Pit" a morir hasta vibear las melodías sintiéndote un "Pretty MF", nuestra propuesta es dar a escuchar más de lo que muchas fiestas en esta ciudad consideran que es el Hip-Hop.
+          Desde un "Mosh Pit" a morir hasta vibear las melodías sintiéndote un
+          "Pretty MF", nuestra propuesta es dar a escuchar más de lo que muchas
+          fiestas en esta ciudad consideran que es el Hip-Hop.
         </p>
         <p class="text-white text-lg font-semibold leading-relaxed">
-          Este es el punto de partida, la primera llama ya ha sido encendida, todo empieza ahora y tienes que ser parte de ello.
+          Este es el punto de partida, la primera llama ya ha sido encendida,
+          todo empieza ahora y tienes que ser parte de ello.
         </p>
       </div>
     </div>
@@ -137,8 +198,8 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
 
   <!-- Script para que funcione el carousel -->
   <script>
-    const track = document.getElementById('carousel-track') as HTMLElement;
-    const dots = document.querySelectorAll('.carousel-dot');
+    const track = document.getElementById("carousel-track") as HTMLElement;
+    const dots = document.querySelectorAll(".carousel-dot");
     let current = 0;
     const total = 3;
 
@@ -146,20 +207,35 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
       current = (index + total) % total;
       (track as HTMLElement).style.transform = `translateX(-${current * 100}%)`;
       dots.forEach((d, i) => {
-        (d as HTMLElement).style.backgroundColor = i === current ? 'oklch(50.5% 0.213 27.518)' : 'rgb(82 82 82)';
+        (d as HTMLElement).style.backgroundColor =
+          i === current ? "oklch(50.5% 0.213 27.518)" : "rgb(82 82 82)";
       });
     }
 
-    document.getElementById('carousel-prev')?.addEventListener('click', () => goTo(current - 1));
-    document.getElementById('carousel-next')?.addEventListener('click', () => goTo(current + 1));
-    dots.forEach(dot => dot.addEventListener('click', (e) => goTo(Number((e.target as HTMLElement).dataset.index))));
+    document
+      .getElementById("carousel-prev")
+      ?.addEventListener("click", () => goTo(current - 1));
+    document
+      .getElementById("carousel-next")
+      ?.addEventListener("click", () => goTo(current + 1));
+    dots.forEach((dot) =>
+      dot.addEventListener("click", (e) =>
+        goTo(Number((e.target as HTMLElement).dataset.index)),
+      ),
+    );
   </script>
 
-
   <!-- Upcoming Events Section -->
-  <section id="entradas" class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28">
+  <section
+    id="entradas"
+    class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28"
+  >
     <div class="max-w-6xl mx-auto">
-      <h2 class="text-4xl md:text-6xl font-black mb-4 text-center text-[oklch(50.5%_0.213_27.518)]">UPCOMING EVENTS</h2>
+      <h2
+        class="text-4xl md:text-6xl font-black mb-4 text-center text-[oklch(50.5%_0.213_27.518)]"
+      >
+        UPCOMING EVENTS
+      </h2>
       <div class="w-32 h-1 bg-[oklch(50.5%_0.213_27.518)] mx-auto mb-16"></div>
 
       <div class="flex justify-center">
@@ -167,11 +243,13 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
           <img
             src="https://www.fourvenues.com/cdn-cgi/imagedelivery/kWuoTchaMsk7Xnc_FNem7A/8282eef4-28b4-4330-6561-831de5f1b400/w=1350"
             alt="Heatrow Club - Back to 2016"
-            class="w-full aspect-[3/4] object-cover transition-all duration-500 hover:scale-[1.03] "
+            class="w-full aspect-[3/4] object-cover transition-all duration-500 hover:scale-[1.03]"
           />
           <div class="mt-4">
-            <p class="text-white font-black text-xl uppercase leading-tight mb-3">
-              BACK TO 2016!<br>SALA BAO BAO, MADRID — 27/03
+            <p
+              class="text-white font-black text-xl uppercase leading-tight mb-3"
+            >
+              BACK TO 2016!<br />SALA BAO BAO, MADRID — 27/03
             </p>
             <a
               href="/tickets"
@@ -183,23 +261,28 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
         </div>
       </div>
     </div>
+    <!-- <DjsSection client:load /> -->
   </section>
 
-
-  <!-- Expandable Cards
-  <section class="py-20 px-4 bg-black border-t border-[oklch(50.5%_0.213_27.518)]">
-    <ExpandableCardDemo client:load />
-  </section> -->
-
   <!-- Find Us -->
-  <section id="contacto" class="py-20 px-8 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28">
+  <section
+    id="contacto"
+    class="py-20 px-8 bg-black border-t border-[oklch(50.5%_0.213_27.518)] scroll-mt-28"
+  >
     <div class="max-w-6xl mx-auto flex items-center justify-between">
-
       <!-- Left: info -->
       <div>
-        <h2 class="text-5xl md:text-7xl font-black uppercase text-[oklch(50.5%_0.213_27.518)] mb-4">FIND US</h2>
-        <p class="text-white font-bold uppercase tracking-widest text-sm mb-1">SALA BAO BAO</p>
-        <p class="text-white font-bold uppercase tracking-widest text-sm mb-6">28003 MADRID</p>
+        <h2
+          class="text-5xl md:text-7xl font-black uppercase text-[oklch(50.5%_0.213_27.518)] mb-4"
+        >
+          FIND US
+        </h2>
+        <p class="text-white font-bold uppercase tracking-widest text-sm mb-1">
+          SALA BAO BAO
+        </p>
+        <p class="text-white font-bold uppercase tracking-widest text-sm mb-6">
+          28003 MADRID
+        </p>
         <a
           href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd4229e05cf83821:0xee32e69c702b521?sa=X&ved=1t:8290&ictx=111"
           target="_blank"
@@ -211,11 +294,23 @@ import CookieBanner from "../components/ui/CookieBanner.astro";
       </div>
 
       <!-- Right: map pin icon -->
-      <svg class="w-24 h-24 md:w-32 md:h-32 text-[oklch(50.5%_0.213_27.518)]" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"/>
-      </svg>
-
+      <a
+        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd4229e05cf83821:0xee32e69c702b521?sa=X&ved=1t:8290&ictx=111"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] transition-all duration-300 hover:scale-110 inline-block"
+      >
+        <svg
+          class="w-24 h-24 md:w-32 md:h-32"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
+          ></path>
+        </svg>
+      </a>
     </div>
   </section>
-
 </Layout>

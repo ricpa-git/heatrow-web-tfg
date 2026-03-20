@@ -29,11 +29,16 @@ export default function Gallery() {
   }, []);
 
   // Dividir imágenes en 3 columnas para efecto masonry
-  const col1 = images.filter((_, i) => i % 3 === 0);
-  const col2 = images.filter((_, i) => i % 3 === 1);
-  const col3 = images.filter((_, i) => i % 3 === 2);
+const third = Math.ceil(images.length / 3);
+const col1 = images.slice(0, third);
+const col2 = images.slice(third, third * 2);
+const col3 = images.slice(third * 2);
 
-  const getIndex = (colIndex, itemIndex) => colIndex + itemIndex * 3;
+const getIndex = (colIndex, itemIndex) => {
+  if (colIndex === 0) return itemIndex;
+  if (colIndex === 1) return third + itemIndex;
+  return third * 2 + itemIndex;
+};
 
   return (
     <div className="w-full">

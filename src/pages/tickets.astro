@@ -5,12 +5,12 @@ import Layout from "../layouts/Layout.astro";
 <Layout title="HEATROW CLUB | Tickets">
   <!-- Tickets Content -->
   <main class="bg-black pb-24 pt-20">
-
     <!-- Hero section: poster left, info right — full viewport height -->
     <div class="flex flex-col md:flex-row min-h-screen pt-40">
-
       <!-- Poster: fills left half with left margin matching footer -->
-<div class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0">
+      <div
+        class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0"
+      >
         <img
           src="https://www.fourvenues.com/cdn-cgi/imagedelivery/kWuoTchaMsk7Xnc_FNem7A/8282eef4-28b4-4330-6561-831de5f1b400/w=1350"
           alt="Heatrow Club - Back to 2016"
@@ -19,14 +19,20 @@ import Layout from "../layouts/Layout.astro";
       </div>
 
       <!-- Event info: right half, top-aligned with image -->
-      <div class="w-full md:w-1/2 flex flex-col justify-start px-10 md:px-16 pt-0 pb-12 gap-6">
-        <h1 class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight">
+      <div
+        class="w-full md:w-1/2 flex flex-col justify-start px-10 md:px-16 pt-0 pb-12 gap-6"
+      >
+        <h1
+          class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight"
+        >
           &ldquo;BACK TO 2016!&rdquo;
         </h1>
 
         <!-- Date/time grid -->
         <div class="flex text-white text-sm border-t border-zinc-700">
-          <div class="flex-1 border-r border-zinc-700 py-3 pr-6">SALA BAO BAO, MADRID</div>
+          <div class="flex-1 border-r border-zinc-700 py-3 pr-6">
+            SALA BAO BAO, MADRID
+          </div>
           <div class="flex-1 border-r border-zinc-700 py-3 px-6">27/03</div>
           <div class="flex-1 py-3 pl-6">00:00 a 7:30</div>
         </div>
@@ -43,14 +49,15 @@ import Layout from "../layouts/Layout.astro";
 
         <!-- Description -->
         <p class="text-zinc-400 text-md leading-relaxed max-w-md">
-          Después del éxito de la primera edición sin dejaros más a la espera, en Heat Row este marzo hacemos un throwback a lo mejor del 2016.
-        
-Lil Uzi, Rae Sremmurd, Gucci Mane,  A$AP Ferg, Future, Young Thug..  todo junto a los mayores hits del momento.        </p>
+          DESPUÉS DEL ÉXITO DE LA PRIMERA EDICIÓN SIN DEJAROS MÁS A LA ESPERA,
+          EN HEAT ROW ESTE MARZO HACEMOS UN THROWBACK A LO MEJOR DEL 2016. LIL
+          UZI, RAE SREMMURD, GUCCI MANE, A$AP FERG, FUTURE, YOUNG THUG... TODO
+          JUNTO A LOS MAYORES HITS DEL MOMENTO.
+        </p>
       </div>
-
     </div>
-<br>
-<br>
+    <br />
+    <br />
     <!-- YouTube section — appears on scroll -->
     <!-- <div class="px-8 md:px-16 pb-8">
       <div class="relative w-full max-w-4xl aspect-video mx-auto">
@@ -64,7 +71,5 @@ Lil Uzi, Rae Sremmurd, Gucci Mane,  A$AP Ferg, Future, Young Thug..  todo junto 
         ></iframe>
       </div>
     </div> -->
-
   </main>
-
 </Layout>

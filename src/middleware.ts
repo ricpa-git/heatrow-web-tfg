@@ -8,9 +8,12 @@ export const onRequest = defineMiddleware(async ({ request, redirect, cookies },
   if (url.pathname.startsWith("/admin") && !url.pathname.startsWith("/admin/login")) {
     // Comprobar si hay sesión activa preguntando al backend
     try {
+      const cookieString = request.headers.get("cookie") || "";
       const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/auth/me`, {
+        credentials: "include",
         headers: {
-          cookie: request.headers.get("cookie") || ""
+          cookie: cookieString,
+          "Content-Type": "application/json"
         }
       });
 
@@ -19,7 +22,8 @@ export const onRequest = defineMiddleware(async ({ request, redirect, cookies },
       const data = await res.json();
       if (data.role !== "admin") return redirect("/admin/login");
 
-    } catch {
+    } catch (error) {
+      console.error("Auth error:", error);
       return redirect("/admin/login");
     }
   }

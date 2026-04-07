@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FB9dDX44R8U=",
+  "dgSpecHash": "o8ZP8iHeFJ4=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj",
+  "projectFilePath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Marketing\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Marketing\\.nuget\\packages\\microsoft.aspnetcore.authentication.cookies\\2.3.9\\microsoft.aspnetcore.authentication.cookies.2.3.9.nupkg.sha512",
@@ -39,9 +39,9 @@
       "code": "NU1510",
       "level": "Warning",
       "message": "PackageReference Microsoft.AspNetCore.Authentication.Cookies no se eliminará. Considere la posibilidad de quitar este paquete de las dependencias, ya que es probable que no sea necesario.",
-      "projectPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj",
+      "projectPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj",
+      "filePath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj",
       "libraryId": "Microsoft.AspNetCore.Authentication.Cookies",
       "targetGraphs": [
         "net10.0"

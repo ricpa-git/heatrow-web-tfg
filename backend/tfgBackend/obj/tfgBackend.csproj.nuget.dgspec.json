@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj": {}
+    "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj": {
+    "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj",
+        "projectUniqueName": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj",
         "projectName": "tfgBackend",
-        "projectPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\tfgBackend.csproj",
+        "projectPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\tfgBackend.csproj",
         "packagesPath": "C:\\Users\\Marketing\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\backend\\tfgBackend\\obj\\",
+        "outputPath": "C:\\Users\\Marketing\\Desktop\\Escritorio\\tfg\\heatrow-web-tfg\\backend\\tfgBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

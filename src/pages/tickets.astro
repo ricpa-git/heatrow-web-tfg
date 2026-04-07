@@ -11,11 +11,16 @@ import Layout from "../layouts/Layout.astro";
       <div
         class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0"
       >
-        <img
-          src="https://www.fourvenues.com/cdn-cgi/imagedelivery/kWuoTchaMsk7Xnc_FNem7A/8282eef4-28b4-4330-6561-831de5f1b400/w=1350"
-          alt="Heatrow Club - Back to 2016"
-          class="w-full object-cover min-h-[60vw] md:min-h-0"
-        />
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="w-full aspect-[3/4] object-cover border border-red-600"
+          >
+            <source src="/videoye.mp4" type="video/mp4" />
+            Tu navegador no soporta el elemento video
+          </video>
       </div>
 
       <!-- Event info: right half, top-aligned with image -->
@@ -25,15 +30,15 @@ import Layout from "../layouts/Layout.astro";
         <h1
           class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight"
         >
-          &ldquo;BACK TO 2016!&rdquo;
+          &ldquo;KANYE WEST AFTER CONCERT&rdquo;
         </h1>
 
         <!-- Date/time grid -->
         <div class="flex text-white text-sm border-t border-zinc-700">
           <div class="flex-1 border-r border-zinc-700 py-3 pr-6">
-            SALA BAO BAO, MADRID
+            TEATRO MAGNO, MADRID
           </div>
-          <div class="flex-1 border-r border-zinc-700 py-3 px-6">27/03</div>
+          <div class="flex-1 border-r border-zinc-700 py-3 px-6">30/07</div>
           <div class="flex-1 py-3 pl-6">00:00 a 7:30</div>
         </div>
 
@@ -48,12 +53,12 @@ import Layout from "../layouts/Layout.astro";
         </a>
 
         <!-- Description -->
-        <p class="text-zinc-400 text-md leading-relaxed max-w-md">
+        <!-- <p class="text-zinc-400 text-md leading-relaxed max-w-md">
           DESPUÉS DEL ÉXITO DE LA PRIMERA EDICIÓN SIN DEJAROS MÁS A LA ESPERA,
           EN HEAT ROW ESTE MARZO HACEMOS UN THROWBACK A LO MEJOR DEL 2016. LIL
           UZI, RAE SREMMURD, GUCCI MANE, A$AP FERG, FUTURE, YOUNG THUG... TODO
           JUNTO A LOS MAYORES HITS DEL MOMENTO.
-        </p>
+        </p> -->
       </div>
     </div>
     <br />

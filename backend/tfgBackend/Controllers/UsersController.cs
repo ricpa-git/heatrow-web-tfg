@@ -73,6 +73,27 @@ namespace tfgBackend.Controllers
                 role = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role)?.Value
             });
         }
+
+        // [HttpPost("test-hash")]
+        // public IActionResult TestHash([FromBody] LoginRequest request)
+        // {
+        //     var user = _db.Users.FirstOrDefault(u => u.Username == request.Username);
+        //     if (user == null)
+        //         return NotFound("Usuario no encontrado");
+
+        //     var sha256 = System.Security.Cryptography.SHA256.Create();
+        //     var passwordBytes = System.Text.Encoding.UTF8.GetBytes(request.Password);
+        //     var hashBytes = sha256.ComputeHash(passwordBytes);
+        //     var calculatedHash = string.Concat(hashBytes.Select(b => b.ToString("x2")));
+
+        //     return Ok(new
+        //     {
+        //         username = user.Username,
+        //         storedHash = user.Password,
+        //         calculatedHash = calculatedHash,
+        //         match = user.Password == calculatedHash
+        //     });
+        // }
     }
 
     public class LoginRequest

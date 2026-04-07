@@ -88,7 +88,7 @@ import DjsSection from "../components/ui/DjsSection.jsx";
       <div class="w-32 h-1 bg-[oklch(50.5%_0.213_27.518)] mx-auto mb-16"></div>
 
       <!-- Carousel -->
-      <div class="relative overflow-hidden" id="carousel">
+      <div class="relative overflow-hidden" id="carousel" >
         <div
           class="carousel-inner flex transition-transform duration-500 ease-in-out"
           id="carousel-track"
@@ -96,10 +96,10 @@ import DjsSection from "../components/ui/DjsSection.jsx";
           <!-- Slide 1 -->
           <div class="carousel-slide min-w-full">
             <div
-              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-red-600 overflow-hidden"
             >
               <img
-                src="../../public/gallery/foto5.png"
+                src="/gallery/foto5.png"
                 class="w-full h-full object-cover"
                 alt="Foto 1"
               />
@@ -108,11 +108,11 @@ import DjsSection from "../components/ui/DjsSection.jsx";
           <!-- Slide 2 -->
           <div class="carousel-slide min-w-full">
             <div
-              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-red-600 overflow-hidden"
             >
               <!-- Sustituye el span por una imagen si la agregas, con el mismo estilo -->
               <img
-                src="../../public/gallery/foto1.png"
+                src="/gallery/foto1.png"
                 class="w-full h-full object-cover"
                 alt="Foto 2"
               />
@@ -121,11 +121,11 @@ import DjsSection from "../components/ui/DjsSection.jsx";
           <!-- Slide 3 -->
           <div class="carousel-slide min-w-full">
             <div
-              class="aspect-video bg-zinc-900 flex items-center justify-center border border-zinc-700 overflow-hidden"
+              class="aspect-video bg-zinc-900 flex items-center justify-center border border-red-600 overflow-hidden"
             >
               <!-- Sustituye el span por una imagen si la agregas, con el mismo estilo -->
               <img
-                src="../../public/gallery/foto4.png"
+                src="/gallery/foto4.png"
                 class="w-full h-full object-cover"
                 alt="Foto 3"
               />
@@ -240,16 +240,21 @@ import DjsSection from "../components/ui/DjsSection.jsx";
 
       <div class="flex justify-center">
         <div class="flex flex-col w-full max-w-sm">
-          <img
-            src="https://www.fourvenues.com/cdn-cgi/imagedelivery/kWuoTchaMsk7Xnc_FNem7A/8282eef4-28b4-4330-6561-831de5f1b400/w=1350"
-            alt="Heatrow Club - Back to 2016"
-            class="w-full aspect-[3/4] object-cover transition-all duration-500 hover:scale-[1.03]"
-          />
+          <video
+            autoplay
+            muted
+            loop
+            playsinline
+            class="w-full aspect-[3/4] object-cover border border-red-600"
+          >
+            <source src="/videoye.mp4" type="video/mp4" />
+            Tu navegador no soporta el elemento video
+          </video>
           <div class="mt-4">
             <p
               class="text-white font-black text-xl uppercase leading-tight mb-3"
             >
-              BACK TO 2016!<br />SALA BAO BAO, MADRID — 27/03
+              KANYE WEST AFTER CONCERT<br />TEATRO MAGNO, MADRID — 30/07
             </p>
             <a
               href="/tickets"
@@ -278,13 +283,13 @@ import DjsSection from "../components/ui/DjsSection.jsx";
           FIND US
         </h2>
         <p class="text-white font-bold uppercase tracking-widest text-sm mb-1">
-          SALA BAO BAO
+          TEATRO MAGNO
         </p>
         <p class="text-white font-bold uppercase tracking-widest text-sm mb-6">
-          28003 MADRID
+          28014 MADRID
         </p>
         <a
-          href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd4229e05cf83821:0xee32e69c702b521?sa=X&ved=1t:8290&ictx=111"
+          href=https://www.google.com/maps/place/Teatro+Magno/@40.4173074,-3.6983218,17z/data=!3m1!4b1!4m6!3m5!1s0xd42291c08455f2d:0x484149f164cdd1eb!8m2!3d40.4173074!4d-3.6983218!16s%2Fg%2F11rdbdrd5v?entry=ttu&g_ep=EgoyMDI2MDQwNS4wIKXMDSoASAFQAw%3D%3D
           target="_blank"
           rel="noopener noreferrer"
           class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] text-sm underline underline-offset-4 transition-colors"
@@ -293,24 +298,15 @@ import DjsSection from "../components/ui/DjsSection.jsx";
         </a>
       </div>
 
-      <!-- Right: map pin icon -->
-      <a
-        href="https://www.google.com/maps/place//data=!4m2!3m1!1s0xd4229e05cf83821:0xee32e69c702b521?sa=X&ved=1t:8290&ictx=111"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)] transition-all duration-300 hover:scale-110 inline-block"
-      >
-        <svg
-          class="w-24 h-24 md:w-32 md:h-32"
-          fill="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5S10.62 6.5 12 6.5s2.5 1.12 2.5 2.5S13.38 11.5 12 11.5z"
-          ></path>
-        </svg>
-      </a>
+      <!-- Right: map -->
+      <div class="w-64 h-64 md:w-80 md:h-80 overflow-hidden border border-[oklch(50.5%_0.213_27.518)]">
+        <iframe
+          width="100%"
+          height="100%"
+          frameborder="0"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3037.61804948712!2d-3.7008967234930426!3d40.41731145560309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd42291c08455f2d%3A0x484149f164cdd1eb!2sTeatro%20Magno!5e0!3m2!1ses!2ses!4v1775568497175!5m2!1ses!2ses" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
     </div>
   </section>
 </Layout>

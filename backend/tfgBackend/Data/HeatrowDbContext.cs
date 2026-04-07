@@ -36,32 +36,32 @@ namespace tfgBackend.Data
     public class User
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
-        public DateTime Created_At { get; set; }
+        public string? Username { get; set; }
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public string? Role { get; set; }
+        public DateTime? Created_At { get; set; }
     }
 
     public class Dj
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Bio { get; set; }
-        public string Image { get; set; }
+        public string? Name { get; set; }
+        public string? Bio { get; set; }
+        public string? Image { get; set; }
         public ICollection<EventDj> events_djs { get; set; }
     }
 
     public class Event
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public string Location { get; set; }
-        public string Image { get; set; }
-        public string Dice_Link { get; set; }
-        public DateTime Created_At { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public DateTime? Date { get; set; }
+        public string? Location { get; set; }
+        public string? Image { get; set; }
+        public string? Dice_Link { get; set; }
+        public DateTime? Created_At { get; set; }
         public ICollection<EventDj> events_djs { get; set; }
     }
 
@@ -76,9 +76,9 @@ namespace tfgBackend.Data
     public class Subscriber
     {
         public int Id { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
         [Column("subscribed_at")]
-        public DateTime SubscribedAt { get; set; }
+        public DateTime? SubscribedAt { get; set; }
         public bool Active { get; set; }
     }
 }

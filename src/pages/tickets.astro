@@ -42,15 +42,30 @@ import Layout from "../layouts/Layout.astro";
           <div class="flex-1 py-3 pl-6">00:00 a 7:30</div>
         </div>
 
-        <!-- Buy button -->
-        <a
-          href="https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-        >
-          COMPRAR ENTRADA
-        </a>
+        <!-- Buy buttons -->
+        <div class="flex flex-col sm:flex-row sm:flex-wrap gap-5 sm:gap-6">
+          <div class="w-fit">
+            <a
+              href="/tickets-stripe"
+              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+            >
+              COMPRAR ENTRADA A TRAVES DE LA WEB
+            </a>
+            <p class="text-xs text-white/50 mt-2">Este apartado es solo visual, para mi TFG.</p>
+          </div>
+
+          <div class="w-fit">
+            <a
+              href="https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+            >
+              COMPRAR ENTRADA A TRAVES DE FOURVENUES
+            </a>
+            <p class="text-xs text-white/50 mt-2">Compre sus entradas de verdad.</p>
+          </div>
+        </div>
 
         <!-- Description -->
         <!-- <p class="text-zinc-400 text-md leading-relaxed max-w-md">

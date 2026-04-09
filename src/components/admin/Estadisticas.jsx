@@ -36,7 +36,7 @@ export default function Estadisticas() {
   }, []);
 
 const cards = [
-  { label: "Eventos activos", value: stats.eventos, href: "/admin/eventos" },
+  { label: "Eventos registrados", value: stats.eventos, href: "/admin/eventos" },
   { label: "DJs registrados", value: stats.djs, href: "/admin/djs" },
   { label: "Suscriptores", value: stats.suscriptores, href: "/admin/subscriptores" },
 ];

@@ -1,5 +1,8 @@
 ﻿---
 import Layout from "../layouts/Layout.astro";
+
+const fourvenuesUrl =
+  "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA";
 ---
 
 <Layout title="HEATROW CLUB | Tickets">
@@ -42,29 +45,31 @@ import Layout from "../layouts/Layout.astro";
           <div class="flex-1 py-3 pl-6">00:00 a 7:30</div>
         </div>
 
-        <!-- Buy buttons -->
-        <div class="flex flex-col sm:flex-row sm:flex-wrap gap-5 sm:gap-6">
-          <div class="w-fit">
-            <a
-              href="/tickets-stripe"
-              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-            >
-              COMPRAR ENTRADA A TRAVES DE LA WEB
-            </a>
-            <p class="text-xs text-white/50 mt-2">Este apartado es solo visual, para mi TFG.</p>
-          </div>
+        <!-- Buy and share buttons -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+          <a
+            href={fourvenuesUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+          >
+            COMPRAR ENTRADA
+          </a>
 
-          <div class="w-fit">
-            <a
-              href="https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-            >
-              COMPRAR ENTRADA A TRAVES DE FOURVENUES
-            </a>
-            <p class="text-xs text-white/50 mt-2">Compre sus entradas de verdad.</p>
-          </div>
+          <button
+            id="share-ticket-btn"
+            type="button"
+            data-share-url={fourvenuesUrl}
+            class="inline-flex items-center justify-center w-11 h-11 border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors"
+            aria-label="Compartir entrada"
+            title="Compartir entrada"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 3h7v7" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10 14L21 3" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
         </div>
 
         <!-- Description -->
@@ -92,4 +97,39 @@ import Layout from "../layouts/Layout.astro";
       </div>
     </div> -->
   </main>
+
+  <script>
+    const shareBtn = document.getElementById("share-ticket-btn") as HTMLButtonElement | null;
+
+    if (shareBtn) {
+      shareBtn.addEventListener("click", async () => {
+        const shareUrl = shareBtn.dataset.shareUrl;
+        if (!shareUrl) return;
+
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: "KANYE WEST AFTER CONCERT",
+              text: "Te paso el enlace para comprar la entrada en Fourvenues",
+              url: shareUrl,
+            });
+            return;
+          } catch {
+            // User canceled share dialog, continue silently.
+          }
+        }
+
+        try {
+          await navigator.clipboard.writeText(shareUrl);
+          const previousTitle = shareBtn.title;
+          shareBtn.title = "Enlace copiado";
+          setTimeout(() => {
+            shareBtn.title = previousTitle;
+          }, 1400);
+        } catch {
+          window.prompt("Copia este enlace:", shareUrl);
+        }
+      });
+    }
+  </script>
 </Layout>

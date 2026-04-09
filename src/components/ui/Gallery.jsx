@@ -1,24 +1,71 @@
 import { useState, useEffect } from "react";
 
-const images = [
-  { src: "/gallery/foto1.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto2.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto3.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto4.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto5.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto6.png", alt: "Heatrow Club" },
-  { src: "/gallery/foto7.png", alt: "Heatrow Club" },
-  // { src: "/gallery/foto8.png", alt: "Heatrow Club" },
-  // Añade más fotos aquí con el mismo formato
+const imageFiles = [
+  "foto1.png",
+  "foto2.png",
+  "foto3.png",
+  "foto4.png",
+  "foto5.jpeg",
+  "foto5.png",
+  "foto6.png",
+  "foto7.png",
+  "foto8.jpeg",
+  "foto9.jpeg",
+  "foto10.jpeg",
+  "foto11.jpeg",
+  "foto12.jpeg",
+  "foto13.jpeg",
+  "foto14.jpeg",
+  "foto15.jpeg",
+  "foto16.jpeg",
+  "foto17.jpeg",
+  "foto18.jpeg",
+  "foto19.jpeg",
+  "foto20.jpeg",
+  "foto21.jpeg",
+  "foto22.jpeg",
+  "foto23.jpeg",
+  "foto25.jpeg",
+  "foto28.jpeg",
+  "foto29.jpeg",
+  "foto30.jpeg",
+  "foto31.jpeg",
+  "foto32.jpeg",
+  "foto33.jpeg",
+  "foto34.jpeg",
+  "foto35.jpeg",
+  "foto36.jpeg",
+  "foto37.jpeg",
+  "foto38.jpeg",
+  "foto39.jpeg",
+  "foto40.jpeg",
+  "foto41.jpeg",
+  "foto42.jpeg",
+  "foto43.jpeg",
+  "foto44.jpeg",
+  "foto45.jpeg",
+  "foto46.jpeg",
+  "foto47.jpeg",
+  "foto48.jpeg",
+  "foto49.jpeg",
+  "foto50.jpeg",
+  "foto51.jpeg",
+  "foto52.jpeg",
 ];
+
+const images = imageFiles.map((fileName) => ({
+  src: `/gallery/${fileName}`,
+  alt: "Heatrow Club",
+}));
 export default function Gallery() {
   const [lightbox, setLightbox] = useState(null); // índice de la foto abierta
   const [loaded, setLoaded] = useState(false);
 
   const handleDownload = (imageSrc) => {
+    const extension = imageSrc.split(".").pop() || "jpg";
     const link = document.createElement('a');
     link.href = imageSrc;
-    link.download = `heatrow-${Date.now()}.png`;
+    link.download = `heatrow-${Date.now()}.${extension}`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -37,49 +84,30 @@ export default function Gallery() {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
 
-  // Dividir imágenes en 3 columnas para efecto masonry
-const third = Math.ceil(images.length / 3);
-const col1 = images.slice(0, third);
-const col2 = images.slice(third, third * 2);
-const col3 = images.slice(third * 2);
-
-const getIndex = (colIndex, itemIndex) => {
-  if (colIndex === 0) return itemIndex;
-  if (colIndex === 1) return third + itemIndex;
-  return third * 2 + itemIndex;
-};
-
   return (
     <div className="w-full">
       {/* Grid masonry */}
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
-        {[col1, col2, col3].map((col, colIndex) => (
-          <div key={colIndex} className="flex flex-col gap-2 md:gap-3">
-            {col.map((img, itemIndex) => {
-              const globalIndex = getIndex(colIndex, itemIndex);
-              return (
-<div
-  key={globalIndex}
-  className={`overflow-hidden cursor-pointer group relative border border-[oklch(50.5%_0.213_27.518)] transition-all duration-500 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
-  style={{ transitionDelay: `${globalIndex * 50}ms` }}
-  onClick={() => setLightbox(globalIndex)}
->
-<img
-  src={img.src}
-  alt={img.alt}
-  className="w-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:grayscale"
-  loading="lazy"
-/>
-  {/* Overlay rojo en hover */}
-<div
-  className="absolute inset-0 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"
-  style={{ backgroundColor: 'oklch(50.5% 0.213 27.518 / 0.35)' }}
->
-  <span className="text-white text-3xl font-bold"></span>
-</div>
-</div>
-              );
-            })}
+      <div className="columns-2 md:columns-3 gap-2 md:gap-3 [column-fill:_balance]">
+        {images.map((img, index) => (
+          <div
+            key={index}
+            className={`mb-2 md:mb-3 break-inside-avoid overflow-hidden cursor-pointer group relative border border-[oklch(50.5%_0.213_27.518)] transition-all duration-500 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
+            style={{ transitionDelay: `${index * 35}ms` }}
+            onClick={() => setLightbox(index)}
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              className="w-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:grayscale"
+              loading="lazy"
+            />
+            {/* Overlay rojo en hover */}
+            <div
+              className="absolute inset-0 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"
+              style={{ backgroundColor: "oklch(50.5% 0.213 27.518 / 0.35)" }}
+            >
+              <span className="text-white text-3xl font-bold"></span>
+            </div>
           </div>
         ))}
       </div>

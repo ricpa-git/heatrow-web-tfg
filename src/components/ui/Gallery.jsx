@@ -1,65 +1,72 @@
 import { useState, useEffect } from "react";
 
 const imageFiles = [
-  "foto1.png",
-  "foto2.png",
-  "foto3.png",
-  "foto4.png",
-  "foto5.jpeg",
-  "foto5.png",
-  "foto6.png",
-  "foto7.png",
-  "foto8.jpeg",
-  "foto9.jpeg",
-  "foto10.jpeg",
-  "foto11.jpeg",
-  "foto12.jpeg",
-  "foto13.jpeg",
-  "foto14.jpeg",
-  "foto15.jpeg",
-  "foto16.jpeg",
-  "foto17.jpeg",
-  "foto18.jpeg",
-  "foto19.jpeg",
-  "foto20.jpeg",
-  "foto21.jpeg",
-  "foto22.jpeg",
-  "foto23.jpeg",
-  "foto25.jpeg",
-  "foto28.jpeg",
-  "foto29.jpeg",
-  "foto30.jpeg",
-  "foto31.jpeg",
-  "foto32.jpeg",
-  "foto33.jpeg",
-  "foto34.jpeg",
-  "foto35.jpeg",
-  "foto36.jpeg",
-  "foto37.jpeg",
-  "foto38.jpeg",
-  "foto39.jpeg",
-  "foto40.jpeg",
-  "foto41.jpeg",
-  "foto42.jpeg",
-  "foto43.jpeg",
-  "foto44.jpeg",
-  "foto45.jpeg",
-  "foto46.jpeg",
-  "foto47.jpeg",
-  "foto48.jpeg",
-  "foto49.jpeg",
-  "foto50.jpeg",
-  "foto51.jpeg",
-  "foto52.jpeg",
+  { name: "foto1.png", type: "image" },
+  { name: "foto2.png", type: "image" },
+  { name: "foto3.png", type: "image" },
+  { name: "foto4.png", type: "image" },
+  { name: "foto5.jpeg", type: "image" },
+  { name: "foto5.png", type: "image" },
+  { name: "foto6.png", type: "image" },
+  { name: "foto7.png", type: "image" },
+  { name: "foto8.jpeg", type: "image" },
+  { name: "foto9.jpeg", type: "image" },
+  { name: "foto10.jpeg", type: "image" },
+  { name: "foto11.jpeg", type: "image" },
+  { name: "foto12.jpeg", type: "image" },
+  { name: "foto13.jpeg", type: "image" },
+  { name: "foto14.jpeg", type: "image" },
+  { name: "foto15.jpeg", type: "image" },
+  { name: "foto16.jpeg", type: "image" },
+  { name: "foto17.jpeg", type: "image" },
+  { name: "foto18.jpeg", type: "image" },
+  { name: "foto19.jpeg", type: "image" },
+  { name: "foto20.jpeg", type: "image" },
+  { name: "foto21.jpeg", type: "image" },
+  { name: "foto22.jpeg", type: "image" },
+  { name: "foto23.jpeg", type: "image" },
+  { name: "foto25.jpeg", type: "image" },
+  { name: "foto28.jpeg", type: "image" },
+  { name: "foto29.jpeg", type: "image" },
+  { name: "foto30.jpeg", type: "image" },
+  { name: "foto31.jpeg", type: "image" },
+  { name: "foto32.jpeg", type: "image" },
+  { name: "foto33.jpeg", type: "image" },
+  { name: "foto34.jpeg", type: "image" },
+  { name: "foto35.jpeg", type: "image" },
+  { name: "foto36.jpeg", type: "image" },
+  { name: "foto37.jpeg", type: "image" },
+  { name: "foto38.jpeg", type: "image" },
+  { name: "foto39.jpeg", type: "image" },
+  { name: "foto40.jpeg", type: "image" },
+  { name: "foto41.jpeg", type: "image" },
+  { name: "foto42.jpeg", type: "image" },
+  { name: "foto43.jpeg", type: "image" },
+  { name: "foto44.jpeg", type: "image" },
+  { name: "foto45.jpeg", type: "image" },
+  { name: "foto46.jpeg", type: "image" },
+  { name: "foto47.jpeg", type: "image" },
+  { name: "foto48.jpeg", type: "image" },
+  { name: "foto49.jpeg", type: "image" },
+  { name: "foto50.jpeg", type: "image" },
+  { name: "foto51.jpeg", type: "image" },
+  { name: "foto52.jpeg", type: "image" },
 ];
 
-const images = imageFiles.map((fileName) => ({
-  src: `/gallery/${fileName}`,
+const images = imageFiles.map((item) => ({
+  src: `/gallery/${item.name}`,
   alt: "Heatrow Club",
+  type: item.type,
 }));
+
 export default function Gallery() {
-  const [lightbox, setLightbox] = useState(null); // índice de la foto abierta
+  const [lightbox, setLightbox] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [filter, setFilter] = useState("all");
+
+  const filteredImages = filter === "all" 
+    ? images 
+    : images.filter(img => img.type === filter);
 
   const handleDownload = (imageSrc) => {
     const extension = imageSrc.split(".").pop() || "jpg";
@@ -74,21 +81,45 @@ export default function Gallery() {
   useEffect(() => {
     setLoaded(true);
 
-    // Cerrar lightbox con ESC
     const handleKey = (e) => {
       if (e.key === "Escape") setLightbox(null);
-      if (e.key === "ArrowRight") setLightbox(i => i < images.length - 1 ? i + 1 : 0);
-      if (e.key === "ArrowLeft") setLightbox(i => i > 0 ? i - 1 : images.length - 1);
+      if (e.key === "ArrowRight") setLightbox(i => i < filteredImages.length - 1 ? i + 1 : 0);
+      if (e.key === "ArrowLeft") setLightbox(i => i > 0 ? i - 1 : filteredImages.length - 1);
     };
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
-  }, []);
+  }, [filteredImages.length]);
 
   return (
     <div className="w-full">
+      {/* Filter Buttons */}
+      <div className="flex justify-center gap-4 mb-8">
+        {[
+          { value: "all", label: "TODOS" },
+          { value: "image", label: "FOTOS" },
+          { value: "video", label: "VIDEOS" },
+        ].map(btn => (
+          <button
+            key={btn.value}
+            onClick={() => {
+              setFilter(btn.value);
+              setLightbox(null);
+            }}
+            className={`px-6 py-2 uppercase font-bold tracking-widest text-sm transition-all ${
+              filter === btn.value
+                ? "bg-[oklch(50.5%_0.213_27.518)] text-white border border-[oklch(50.5%_0.213_27.518)]"
+                : "border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white"
+            }`}
+          >
+            {btn.label}
+          </button>
+        ))}
+      </div>
+
       {/* Grid masonry */}
-      <div className="columns-2 md:columns-3 gap-2 md:gap-3 [column-fill:_balance]">
-        {images.map((img, index) => (
+      {filteredImages.length > 0 ? (
+        <div className="columns-2 md:columns-3 gap-2 md:gap-3 [column-fill:_balance]">
+          {filteredImages.map((img, index) => (
           <div
             key={index}
             className={`mb-2 md:mb-3 break-inside-avoid overflow-hidden cursor-pointer group relative border border-[oklch(50.5%_0.213_27.518)] transition-all duration-500 ${loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`}
@@ -111,6 +142,13 @@ export default function Gallery() {
           </div>
         ))}
       </div>
+      ) : (
+        <div className="text-center py-16">
+          <p className="text-zinc-400 text-lg uppercase tracking-widest">
+            No hay {filter === "video" ? "videos" : "imágenes"} disponibles aún
+          </p>
+        </div>
+      )}
 
       {/* Lightbox */}
       {lightbox !== null && (
@@ -129,7 +167,7 @@ export default function Gallery() {
           {/* Botón descargar */}
           <button
             className="absolute top-6 right-20 text-white hover:text-[oklch(50.5%_0.213_27.518)] transition z-50 flex items-center justify-center h-9"
-            onClick={(e) => { e.stopPropagation(); handleDownload(images[lightbox].src); }}
+            onClick={(e) => { e.stopPropagation(); handleDownload(filteredImages[lightbox].src); }}
             title="Descargar imagen"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -140,15 +178,15 @@ export default function Gallery() {
           {/* Botón anterior */}
           <button
             className="absolute left-4 md:left-8 text-white text-4xl hover:text-[oklch(50.5%_0.213_27.518)] transition z-50"
-            onClick={(e) => { e.stopPropagation(); setLightbox(i => i > 0 ? i - 1 : images.length - 1); }}
+            onClick={(e) => { e.stopPropagation(); setLightbox(i => i > 0 ? i - 1 : filteredImages.length - 1); }}
           >
             ‹
           </button>
 
           {/* Imagen */}
           <img
-            src={images[lightbox].src}
-            alt={images[lightbox].alt}
+            src={filteredImages[lightbox].src}
+            alt={filteredImages[lightbox].alt}
             className="max-h-[90vh] max-w-[90vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
@@ -156,14 +194,14 @@ export default function Gallery() {
           {/* Botón siguiente */}
           <button
             className="absolute right-4 md:right-8 text-white text-4xl hover:text-[oklch(50.5%_0.213_27.518)] transition z-50"
-            onClick={(e) => { e.stopPropagation(); setLightbox(i => i < images.length - 1 ? i + 1 : 0); }}
+            onClick={(e) => { e.stopPropagation(); setLightbox(i => i < filteredImages.length - 1 ? i + 1 : 0); }}
           >
             ›
           </button>
 
           {/* Contador */}
           <div className="absolute bottom-6 text-zinc-400 text-sm">
-            {lightbox + 1} / {images.length}
+            {lightbox + 1} / {filteredImages.length}
           </div>
         </div>
       )}

@@ -2,8 +2,3 @@
   from = "/admin"
   to = "/admin/"
   status = 301
-
-[[redirects]]
-  from = "/*"
-  to = "/.netlify/functions/entry"
-  status = 200

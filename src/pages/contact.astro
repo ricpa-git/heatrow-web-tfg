@@ -1,5 +1,6 @@
 ﻿---
 import Layout from "../layouts/Layout.astro";
+import FunctionalityPopup from "../components/ui/FunctionalityPopup.astro";
 ---
 
 <Layout title="HEATROW CLUB | Contact">
@@ -59,5 +60,7 @@ import Layout from "../layouts/Layout.astro";
       <script is:inline src="/js/contact.js"></script>
     </div>
   </main>
+
+  <FunctionalityPopup triggers={["#submit-btn"]} />
 
 </Layout>

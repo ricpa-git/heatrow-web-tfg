@@ -1,5 +1,6 @@
 ---
 // Footer compartido en todas las páginas
+import FunctionalityPopup from "../components/ui/FunctionalityPopup.astro";
 ---
 
 <footer class="py-10 px-8 bg-black border-t border-[oklch(50.5%_0.213_27.518)]">
@@ -25,6 +26,7 @@
           class="bg-zinc-900 border border-zinc-700 focus:border-[oklch(50.5%_0.213_27.518)] text-white placeholder-zinc-500 px-4 py-2.5 text-sm outline-none transition-colors w-full md:w-64"
         />
         <button
+          id="footer-subscribe-btn"
           type="submit"
           class="bg-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(45%_0.213_27.518)] text-white font-bold uppercase tracking-widest text-xs px-5 py-2.5 transition-colors whitespace-nowrap"
         >
@@ -200,3 +202,6 @@
   };
   document.head.appendChild(script);
 </script>
+
+<FunctionalityPopup triggers={["#footer-subscribe-btn"]} />
+

@@ -1,5 +1,6 @@
 ﻿---
 import Layout from "../layouts/Layout.astro";
+import FunctionalityPopup from "../components/ui/FunctionalityPopup.astro";
 
 const fourvenuesUrl =
   "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA";
@@ -98,38 +99,6 @@ const fourvenuesUrl =
     </div> -->
   </main>
 
-  <script>
-    const shareBtn = document.getElementById("share-ticket-btn") as HTMLButtonElement | null;
+  <FunctionalityPopup triggers={["a[href*='fourvenues']", "#share-ticket-btn"]} />
 
-    if (shareBtn) {
-      shareBtn.addEventListener("click", async () => {
-        const shareUrl = shareBtn.dataset.shareUrl;
-        if (!shareUrl) return;
-
-        if (navigator.share) {
-          try {
-            await navigator.share({
-              title: "KANYE WEST AFTER CONCERT",
-              text: "Te paso el enlace para comprar la entrada en Fourvenues",
-              url: shareUrl,
-            });
-            return;
-          } catch {
-            // User canceled share dialog, continue silently.
-          }
-        }
-
-        try {
-          await navigator.clipboard.writeText(shareUrl);
-          const previousTitle = shareBtn.title;
-          shareBtn.title = "Enlace copiado";
-          setTimeout(() => {
-            shareBtn.title = previousTitle;
-          }, 1400);
-        } catch {
-          window.prompt("Copia este enlace:", shareUrl);
-        }
-      });
-    }
-  </script>
 </Layout>

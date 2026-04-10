@@ -1,7 +1,7 @@
 /* empty css                               */
 import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead } from '../chunks/astro/server_BfkuFWeA.mjs';
 import 'piccolore';
-import { $ as $$Layout } from '../chunks/Layout_DGQ-yxGH.mjs';
+import { $ as $$Layout } from '../chunks/Layout_CJcTtUAj.mjs';
 export { renderers } from '../renderers.mjs';
 
 const $$Cookies = createComponent(($$result, $$props, $$slots) => {

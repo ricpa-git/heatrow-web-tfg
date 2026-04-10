@@ -1,12 +1,12 @@
 /* empty css                               */
-import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead, g as addAttribute, n as renderScript } from '../chunks/astro/server_BfkuFWeA.mjs';
+import { e as createComponent, k as renderComponent, r as renderTemplate, m as maybeRenderHead, g as addAttribute } from '../chunks/astro/server_BfkuFWeA.mjs';
 import 'piccolore';
-import { $ as $$Layout } from '../chunks/Layout_DGQ-yxGH.mjs';
+import { $ as $$Layout, a as $$FunctionalityPopup } from '../chunks/Layout_CJcTtUAj.mjs';
 export { renderers } from '../renderers.mjs';
 
-const $$Tickets = createComponent(async ($$result, $$props, $$slots) => {
+const $$Tickets = createComponent(($$result, $$props, $$slots) => {
   const fourvenuesUrl = "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA";
-  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "HEATROW CLUB | Tickets" }, { "default": async ($$result2) => renderTemplate`  ${maybeRenderHead()}<main class="bg-black pb-24 pt-20"> <!-- Hero section: poster left, info right — full viewport height --> <div class="flex flex-col md:flex-row min-h-screen pt-40"> <!-- Poster: fills left half with left margin matching footer --> <div class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0"> <video autoplay muted loop playsinline class="w-full aspect-[3/4] object-cover border border-red-600"> <source src="/videoye.mp4" type="video/mp4">
+  return renderTemplate`${renderComponent($$result, "Layout", $$Layout, { "title": "HEATROW CLUB | Tickets" }, { "default": ($$result2) => renderTemplate`  ${maybeRenderHead()}<main class="bg-black pb-24 pt-20"> <!-- Hero section: poster left, info right — full viewport height --> <div class="flex flex-col md:flex-row min-h-screen pt-40"> <!-- Poster: fills left half with left margin matching footer --> <div class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0"> <video autoplay muted loop playsinline class="w-full aspect-[3/4] object-cover border border-red-600"> <source src="/videoye.mp4" type="video/mp4">
 Tu navegador no soporta el elemento video
 </video> </div> <!-- Event info: right half, top-aligned with image --> <div class="w-full md:w-1/2 flex flex-col justify-start px-10 md:px-16 pt-0 pb-12 gap-6"> <h1 class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight">
 &ldquo;KANYE WEST AFTER CONCERT&rdquo;
@@ -30,7 +30,7 @@ COMPRAR ENTRADA
           allowfullscreen
         ></iframe>
       </div>
-    </div> --> </main> ${renderScript($$result2, "C:/Users/Marketing/Desktop/Escritorio/tfg/heatrow-web-tfg/src/pages/tickets.astro?astro&type=script&index=0&lang.ts")} ` })}`;
+    </div> --> </main> ${renderComponent($$result2, "FunctionalityPopup", $$FunctionalityPopup, { "triggers": ["a[href*='fourvenues']", "#share-ticket-btn"] })} ` })}`;
 }, "C:/Users/Marketing/Desktop/Escritorio/tfg/heatrow-web-tfg/src/pages/tickets.astro", void 0);
 
 const $$file = "C:/Users/Marketing/Desktop/Escritorio/tfg/heatrow-web-tfg/src/pages/tickets.astro";

@@ -1,0 +1,45 @@
+---
+// props: array de selectores de botones que activan el popup
+interface Props {
+  triggers?: string[];
+}
+
+const { triggers = [] } = Astro.props;
+---
+
+<!-- Functionality Warning Popup -->
+<div
+  id="functionality-popup"
+  class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 px-4"
+  style="display: none;"
+  aria-modal="true"
+  role="dialog"
+  aria-labelledby="functionality-popup-title"
+>
+  <div class="w-full max-w-xl border border-[oklch(50.5%_0.213_27.518)] bg-black p-6 md:p-8 shadow-2xl">
+    <h2
+      id="functionality-popup-title"
+      class="text-[oklch(50.5%_0.213_27.518)] text-xl md:text-2xl font-black uppercase tracking-wider"
+    >
+      Funcionalidad en desarrollo
+    </h2>
+    <p class="mt-4 text-zinc-200 text-sm md:text-base leading-relaxed">
+      Esta funcionalidad aún está en desarrollo y próximamente estará disponible. ¡Gracias por tu paciencia!
+    </p>
+
+    <div class="mt-6 flex justify-end">
+      <button
+        id="functionality-popup-close"
+        type="button"
+        class="bg-[oklch(50.5%_0.213_27.518)] text-white px-5 py-2 font-bold text-xs uppercase tracking-widest hover:bg-[oklch(45%_0.213_27.518)] transition-colors"
+      >
+        Cerrar
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="module" define:vars={{ triggers }}>
+  import { setupFunctionalityPopup } from "/js/popup-handler.js";
+  setupFunctionalityPopup(triggers);
+</script>

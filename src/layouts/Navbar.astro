@@ -18,7 +18,7 @@ const navLinks = [
         {navLinks.map(link => (
           <a
             href={link.href}
-            class={`font-semibold transition-colors ${currentPath === link.href ? "text-white underline underline-offset-4" : "text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)]"}`}
+            class={`font-semibold transition-colors nav-link-desktop ${currentPath === link.href ? "text-white underline underline-offset-4" : "text-[oklch(50.5%_0.213_27.518)]"}`}
           >
             {link.label}
           </a>
@@ -135,6 +135,9 @@ const navLinks = [
   @keyframes ticker {
     from { transform: translateX(0); }
     to   { transform: translateX(-50%); }
+  }
+  .nav-link-desktop:hover {
+    color: oklch(57.7% 0.245 27.325);
   }
 </style>
 

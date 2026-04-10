@@ -22,15 +22,9 @@ const apiUrl = import.meta.env.PUBLIC_API_URL;
 		<!-- Si tienes SVG, puedes dejarlo como fallback -->
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
-    <style>
+    <style is:global>
       /* Hover rojo en todos los enlaces y botones del admin */
-      a:hover {
-        color: oklch(50.5% 0.213 27.518) !important;
-      }
-      button:hover {
-        color: oklch(50.5% 0.213 27.518) !important;
-      }
-      <style is:global > .admin-body a:hover,
+      .admin-body a:hover,
       .admin-body button:hover {
         color: oklch(50.5% 0.213 27.518) !important;
       }

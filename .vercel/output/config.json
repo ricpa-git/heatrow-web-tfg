@@ -1,0 +1,83 @@
+{
+	"version": 3,
+	"routes": [
+		{
+			"handle": "filesystem"
+		},
+		{
+			"src": "^/_astro/(.*)$",
+			"headers": {
+				"cache-control": "public, max-age=31536000, immutable"
+			},
+			"continue": true
+		},
+		{
+			"src": "^/_server-islands/([^/]+?)/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/_image/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/djs/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/eventos/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/login/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/subscriptores/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/usuarios/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/admin/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/contact/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/cookies/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/gallery/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/privacidad/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/radio/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/tickets/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/tickets-stripe/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/unsubscribe/?$",
+			"dest": "_render"
+		},
+		{
+			"src": "^/$",
+			"dest": "_render"
+		}
+	]
+}

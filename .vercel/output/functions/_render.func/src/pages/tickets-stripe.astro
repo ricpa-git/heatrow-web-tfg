@@ -1,0 +1,431 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="HEATROW CLUB | Stripe Demo">
+  <main class="bg-black min-h-screen pt-56 pb-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="stripe-shell border border-zinc-800 bg-zinc-950/80">
+        <header class="stripe-topbar">
+          <div class="flex items-center gap-4">
+            <span class="stripe-brand">HEATROW</span>
+            <span class="text-zinc-700">/</span>
+            <span class="text-zinc-500 text-sm uppercase tracking-widest">Compra de entradas</span>
+          </div>
+          <span class="text-zinc-500 text-xs uppercase tracking-[0.2em]">Demo ficticia para TFG</span>
+        </header>
+
+        <div class="stripe-stepper" aria-label="Progreso de compra">
+          <div class="step-item is-active" data-step-indicator="1">
+            <span class="step-dot">1</span>
+            <span class="step-label">Entradas</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" data-step-indicator="2">
+            <span class="step-dot">2</span>
+            <span class="step-label">Datos</span>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" data-step-indicator="3">
+            <span class="step-dot">3</span>
+            <span class="step-label">Pago</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 md:p-6">
+          <section class="space-y-3" aria-live="polite">
+            <div class="stripe-card" data-step-panel="1">
+              <h2 class="panel-title">Selecciona tus entradas</h2>
+
+              <div class="ticket-row">
+                <div>
+                  <p class="text-white font-bold text-2xl">Entrada general</p>
+                  <p class="text-zinc-400 text-xl">15,00 EUR</p>
+                </div>
+                <div class="qty-controls">
+                  <button type="button" class="qty-btn" data-action="minus" data-target="general">-</button>
+                  <span class="qty-value" data-qty="general">1</span>
+                  <button type="button" class="qty-btn" data-action="plus" data-target="general">+</button>
+                </div>
+              </div>
+
+              <div class="ticket-row border-none pb-0">
+                <div>
+                  <p class="text-white font-bold text-2xl">Entrada VIP</p>
+                  <p class="text-zinc-400 text-xl">30,00 EUR</p>
+                </div>
+                <div class="qty-controls">
+                  <button type="button" class="qty-btn" data-action="minus" data-target="vip">-</button>
+                  <span class="qty-value" data-qty="vip">0</span>
+                  <button type="button" class="qty-btn" data-action="plus" data-target="vip">+</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="stripe-card hidden" data-step-panel="2">
+              <h2 class="panel-title">Datos personales</h2>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <label class="field-wrap">
+                  <span>Nombre</span>
+                  <input type="text" placeholder="Tu nombre" />
+                </label>
+                <label class="field-wrap">
+                  <span>Apellidos</span>
+                  <input type="text" placeholder="Tus apellidos" />
+                </label>
+              </div>
+
+              <label class="field-wrap mt-3 block">
+                <span>Email</span>
+                <input type="email" placeholder="tu@email.com" />
+              </label>
+
+              <label class="field-wrap mt-3 block">
+                <span>Telefono</span>
+                <input type="tel" placeholder="+34 600 000 000" />
+              </label>
+            </div>
+
+            <div class="stripe-card hidden" data-step-panel="3">
+              <h2 class="panel-title">Datos de pago</h2>
+
+              <label class="field-wrap block">
+                <span>Numero de tarjeta</span>
+                <input type="text" placeholder="0000 0000 0000 0000" />
+              </label>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
+                <label class="field-wrap">
+                  <span>Caducidad</span>
+                  <input type="text" placeholder="MM/AA" />
+                </label>
+                <label class="field-wrap">
+                  <span>CVV</span>
+                  <input type="text" placeholder="123" />
+                </label>
+              </div>
+
+              <label class="field-wrap mt-3 block">
+                <span>Nombre en la tarjeta</span>
+                <input type="text" placeholder="TU NOMBRE" />
+              </label>
+
+              <p class="text-xs uppercase tracking-widest text-zinc-500 mt-4">Pago seguro simulado</p>
+            </div>
+
+            <div class="flex gap-3">
+              <button type="button" class="action-btn hidden" id="backBtn">Volver</button>
+              <button type="button" class="action-btn action-btn--primary w-full" id="nextBtn">Continuar</button>
+            </div>
+          </section>
+
+          <aside class="stripe-card h-fit">
+            <h3 class="text-[oklch(50.5%_0.213_27.518)] font-black text-2xl uppercase mb-2">"KANYE WEST AFTER CONCERT"</h3>
+            <p class="text-zinc-300 text-1xl uppercase tracking-wider">Teatro Magno, Madrid</p>
+            <p class="text-zinc-400 text-xl mt-1">30 Jul 2026 - 00:00</p>
+
+            <div class="h-px bg-zinc-800 my-4"></div>
+
+            <div class="flex items-center justify-between text-zinc-300 text-xl">
+              <span data-line-items>General x 1</span>
+              <span data-line-total>15,00 EUR</span>
+            </div>
+
+            <div class="h-px bg-zinc-800 my-4"></div>
+
+            <div class="flex items-center justify-between text-white font-black text-4xl">
+              <span>Total</span>
+              <span data-grand-total>15,00 EUR</span>
+            </div>
+
+            <p class="text-zinc-500 text-sm mt-4">Entradas enviadas por email. No reembolsable.</p>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .stripe-shell {
+    box-shadow: 0 20px 60px rgb(0 0 0 / 40%);
+  }
+
+  .stripe-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(39 39 42);
+    background: linear-gradient(180deg, rgb(10 10 10), rgb(8 8 8));
+    padding: 0.9rem 1rem;
+  }
+
+  .stripe-brand {
+    color: oklch(50.5% 0.213 27.518);
+    font-weight: 900;
+    letter-spacing: 0.18em;
+    font-size: 1.2rem;
+  }
+
+  .stripe-stepper {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(39 39 42);
+  }
+
+  .step-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgb(113 113 122);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+    font-weight: 800;
+  }
+
+  .step-dot {
+    width: 1.55rem;
+    height: 1.55rem;
+    border-radius: 9999px;
+    border: 1px solid rgb(82 82 91);
+    display: grid;
+    place-items: center;
+    font-size: 0.72rem;
+  }
+
+  .step-line {
+    flex: 1;
+    height: 1px;
+    background-color: rgb(39 39 42);
+    margin: 0 0.55rem;
+  }
+
+  .step-item.is-active {
+    color: white;
+  }
+
+  .step-item.is-active .step-dot {
+    background: oklch(50.5% 0.213 27.518);
+    border-color: oklch(50.5% 0.213 27.518);
+  }
+
+  .stripe-card {
+    border: 1px solid rgb(39 39 42);
+    background: linear-gradient(180deg, rgb(11 11 12), rgb(8 8 9));
+    padding: 1rem;
+  }
+
+  .panel-title {
+    color: oklch(50.5% 0.213 27.518);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 800;
+    font-size: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .ticket-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgb(39 39 42);
+  }
+
+  .qty-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .qty-btn {
+    width: 2rem;
+    height: 2rem;
+    border: 1px solid rgb(63 63 70);
+    color: white;
+    background: transparent;
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .qty-btn:hover {
+    border-color: oklch(50.5% 0.213 27.518);
+    color: oklch(50.5% 0.213 27.518);
+  }
+
+  .qty-value {
+    font-size: 1.2rem;
+    color: white;
+    min-width: 1.2rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .field-wrap span {
+    display: block;
+    margin-bottom: 0.4rem;
+    color: rgb(161 161 170);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.68rem;
+    font-weight: 700;
+  }
+
+  .field-wrap input {
+    width: 100%;
+    border: 1px solid rgb(63 63 70);
+    background: rgb(28 28 30);
+    color: white;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.92rem;
+  }
+
+  .field-wrap input:focus {
+    outline: none;
+    border-color: oklch(50.5% 0.213 27.518);
+  }
+
+  .action-btn {
+    border: 1px solid rgb(63 63 70);
+    background: transparent;
+    color: white;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 0.72rem 1.1rem;
+    width: 100%;
+  }
+
+  .action-btn:hover {
+    border-color: white;
+  }
+
+  .action-btn--primary {
+    border-color: oklch(50.5% 0.213 27.518);
+    color: white;
+  }
+
+  .action-btn--primary:hover {
+    background: oklch(50.5% 0.213 27.518);
+  }
+
+  @media (max-width: 640px) {
+    .stripe-topbar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.45rem;
+    }
+
+    .step-label {
+      font-size: 0.64rem;
+      letter-spacing: 0.09em;
+    }
+  }
+</style>
+
+<script>
+  const priceGeneral = 15;
+  const priceVip = 30;
+  let qtyGeneral = 1;
+  let qtyVip = 0;
+  let step = 1;
+
+  const qtyNodes = {
+    general: document.querySelector('[data-qty="general"]'),
+    vip: document.querySelector('[data-qty="vip"]')
+  };
+
+  const lineItems = document.querySelector('[data-line-items]');
+  const lineTotal = document.querySelector('[data-line-total]');
+  const grandTotal = document.querySelector('[data-grand-total]');
+  const nextBtn = document.getElementById('nextBtn');
+  const backBtn = document.getElementById('backBtn');
+
+  const stepPanels = {
+    1: document.querySelector('[data-step-panel="1"]'),
+    2: document.querySelector('[data-step-panel="2"]'),
+    3: document.querySelector('[data-step-panel="3"]')
+  };
+
+  function formatEur(value: number) {
+    return `${value.toFixed(2).replace('.', ',')} EUR`;
+  }
+
+  function renderSummary() {
+    const total = qtyGeneral * priceGeneral + qtyVip * priceVip;
+    const lines = [];
+
+    if (qtyGeneral > 0) lines.push(`General x ${qtyGeneral}`);
+    if (qtyVip > 0) lines.push(`VIP x ${qtyVip}`);
+    if (lines.length === 0) lines.push('Sin entradas');
+
+    if (qtyNodes.general) qtyNodes.general.textContent = String(qtyGeneral);
+    if (qtyNodes.vip) qtyNodes.vip.textContent = String(qtyVip);
+    if (lineItems) lineItems.textContent = lines.join(' + ');
+    if (lineTotal) lineTotal.textContent = formatEur(total);
+    if (grandTotal) grandTotal.textContent = formatEur(total);
+  }
+
+  function renderStep() {
+    document.querySelectorAll('[data-step-indicator]').forEach((el) => {
+      const indicatorStep = Number(el.getAttribute('data-step-indicator'));
+      el.classList.toggle('is-active', indicatorStep === step);
+    });
+
+    Object.entries(stepPanels).forEach(([key, panel]) => {
+      if (!panel) return;
+      panel.classList.toggle('hidden', Number(key) !== step);
+    });
+
+    if (backBtn) backBtn.classList.toggle('hidden', step === 1);
+
+    if (nextBtn) {
+      if (step < 3) {
+        nextBtn.textContent = 'Continuar';
+      } else {
+        nextBtn.textContent = 'Confirmar pago';
+      }
+    }
+  }
+
+  document.querySelectorAll('[data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.getAttribute('data-action');
+      const target = btn.getAttribute('data-target');
+
+      if (target === 'general') {
+        if (action === 'plus') qtyGeneral += 1;
+        if (action === 'minus') qtyGeneral = Math.max(0, qtyGeneral - 1);
+      }
+
+      if (target === 'vip') {
+        if (action === 'plus') qtyVip += 1;
+        if (action === 'minus') qtyVip = Math.max(0, qtyVip - 1);
+      }
+
+      renderSummary();
+    });
+  });
+
+  backBtn?.addEventListener('click', () => {
+    step = Math.max(1, step - 1);
+    renderStep();
+  });
+
+  nextBtn?.addEventListener('click', () => {
+    if (step < 3) {
+      step += 1;
+      renderStep();
+      return;
+    }
+
+    alert('Pago simulado completado. Esta pantalla es solo una demo visual para el TFG.');
+  });
+
+  renderSummary();
+  renderStep();
+</script>

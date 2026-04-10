@@ -129,22 +129,6 @@ const navLinks = [
   </div>
 </div>
 
-<style>
-  .ticker-track { animation: ticker 15s linear infinite; }
-  .ticker-track:hover { animation-play-state: paused; }
-  @keyframes ticker {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-  .nav-link-desktop:hover {
-    color: oklch(57.7% 0.245 27.325);
-  }
-  .nav-link-active:hover {
-    color: #f5f5f5;
-    text-decoration-color: #f5f5f5;
-  }
-</style>
-
 <script>
   document.getElementById('ticker-bar')?.addEventListener('click', () => {
     window.location.href = '/tickets';

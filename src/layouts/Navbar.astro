@@ -1,11 +1,13 @@
 ---
+import TicketsDropdown from '../components/TicketsDropdown.astro';
+import { events } from '../lib/events';
+
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
   { href: "/", label: "EVENT" },
   { href: "/gallery", label: "GALLERY" },
   { href: "/contact", label: "CONTACT" },
-  { href: "/tickets", label: "TICKETS" },
   { href: "/radio", label: "RADIO" }
 ];
 ---
@@ -23,6 +25,7 @@ const navLinks = [
             {link.label}
           </a>
         ))}
+        <TicketsDropdown />
       </div>
 
       <!-- Logo centrado -->
@@ -63,6 +66,22 @@ const navLinks = [
             {link.label}
           </a>
         ))}
+        
+        <!-- Tickets submenu para móvil -->
+        <div class="nav-link opacity-0 translate-y-4">
+          <p class="text-3xl sm:text-5xl font-black uppercase tracking-widest text-[oklch(50.5%_0.213_27.518)] mb-4">TICKETS</p>
+          <div class="space-y-3 pl-4 border-l border-[oklch(50.5%_0.213_27.518)]/40">
+            {events.map((event) => (
+              <a
+                href={`/tickets/${event.slug}`}
+                class="block text-lg font-bold tracking-wide text-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors"
+              >
+                <div>{event.title}</div>
+                <div class="text-xs opacity-70">{event.date}</div>
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
 
       <!-- Redes sociales al fondo -->
@@ -131,7 +150,7 @@ const navLinks = [
 
 <script>
   document.getElementById('ticker-bar')?.addEventListener('click', () => {
-    window.location.href = '/tickets';
+    window.location.href = '/tickets/evento-1';
   });
 
   const mobileBtn = document.getElementById('mobile-menu-btn');

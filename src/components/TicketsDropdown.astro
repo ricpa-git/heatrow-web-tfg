@@ -1,0 +1,44 @@
+---
+import { events } from '../lib/events';
+
+const currentPath = Astro.url.pathname;
+const isTicketsActive = currentPath.startsWith('/tickets');
+---
+
+<div class="relative group">
+  <button
+    class={`font-semibold transition-colors flex items-center gap-1 ${
+      isTicketsActive
+        ? "text-white underline underline-offset-4"
+        : "text-[oklch(50.5%_0.213_27.518)] hover:text-[oklch(57.7%_0.245_27.325)]"
+    }`}
+  >
+    TICKETS
+    <svg class="w-4 h-4 transition-transform group-hover:rotate-180" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  <!-- Dropdown menu -->
+  <div
+    class="absolute left-0 mt-0 w-48 bg-black border border-[oklch(50.5%_0.213_27.518)] rounded-sm shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50"
+  >
+    {events.map((event) => {
+      const eventPath = `/tickets/${event.slug}`;
+      const isCurrentEvent = currentPath === eventPath || currentPath === eventPath + '/';
+      
+      return (
+        <a
+          href={eventPath}
+          class={`block px-4 py-3 transition-colors border-b border-[oklch(50.5%_0.213_27.518)]/20 last:border-b-0 ${
+            isCurrentEvent
+              ? "bg-[oklch(50.5%_0.213_27.518)]/20 text-white"
+              : "text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)]/10 hover:text-white"
+          }`}
+        >
+          {event.title} {event.date}
+        </a>
+      );
+    })}
+  </div>
+</div>

@@ -74,6 +74,12 @@ import DemoPopup from "../components/ui/DemoPopup.astro";
     .swipe-hint-arrow-left {
       animation-direction: reverse;
     }
+
+    .event-card[data-active="false"] .purchase-link {
+      pointer-events: none;
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
   </style>
 
   <!-- Hero Section -->
@@ -227,8 +233,8 @@ import DemoPopup from "../components/ui/DemoPopup.astro";
                 KANYE WEST AFTER CONCERT<br />TEATRO MAGNO, MADRID - 30/07
               </p>
               <a
-                href="/tickets"
-                class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+                href="/tickets/evento-1"
+                class="purchase-link inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
               >
                 COMPRAR ENTRADA
               </a>
@@ -255,12 +261,12 @@ import DemoPopup from "../components/ui/DemoPopup.astro";
               >
                 ???????????????????????<br />SALA CLAMORES, MADRID - 05/05
               </p>
-              <!-- <a
-                href="/tickets"
-                class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+              <a
+                href="/tickets/evento-2"
+                class="purchase-link inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
               >
                 COMPRAR ENTRADA
-              </a> -->
+              </a>
             </div>
           </div>
         </article>

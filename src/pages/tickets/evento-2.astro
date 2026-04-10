@@ -1,6 +1,6 @@
 ﻿---
-import Layout from "../layouts/Layout.astro";
-import FunctionalityPopup from "../components/ui/FunctionalityPopup.astro";
+import Layout from "../../layouts/Layout.astro";
+import FunctionalityPopup from "../../components/ui/FunctionalityPopup.astro";
 
 const fourvenuesUrl =
   "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA";
@@ -15,16 +15,11 @@ const fourvenuesUrl =
       <div
         class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0"
       >
-          <video
-            autoplay
-            muted
-            loop
-            playsinline
-            class="w-full aspect-[3/4] object-cover border border-red-600"
-          >
-            <source src="/videoye.mp4" type="video/mp4" />
-            Tu navegador no soporta el elemento video
-          </video>
+        <div class="w-full aspect-[3/4] border border-red-600 bg-zinc-900/70 flex items-center justify-center">
+          <span class="text-zinc-300 text-3xl md:text-4xl font-black uppercase tracking-wider text-center">
+            PROXIMAMENTE...
+          </span>
+        </div>
       </div>
 
       <!-- Event info: right half, top-aligned with image -->
@@ -34,16 +29,16 @@ const fourvenuesUrl =
         <h1
           class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight"
         >
-          &ldquo;KANYE WEST AFTER CONCERT&rdquo;
+          &ldquo;?????&rdquo;
         </h1>
 
         <!-- Date/time grid -->
         <div class="flex text-white text-sm border-t border-zinc-700">
           <div class="flex-1 border-r border-zinc-700 py-3 pr-6">
-            TEATRO MAGNO, MADRID
+            SALA CLAMORES, MADRID
           </div>
-          <div class="flex-1 border-r border-zinc-700 py-3 px-6">30/07</div>
-          <div class="flex-1 py-3 pl-6">00:00 a 7:30</div>
+          <div class="flex-1 border-r border-zinc-700 py-3 px-6">05/05</div>
+          <div class="flex-1 py-3 pl-6">?????</div>
         </div>
 
         <!-- Buy and share buttons -->

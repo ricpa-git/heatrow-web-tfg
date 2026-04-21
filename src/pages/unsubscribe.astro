@@ -1,6 +1,6 @@
 ---
 const email = Astro.url.searchParams.get('email') || '';
-const apiUrl = import.meta.env.PUBLIC_API_URL;
+const apiUrl = import.meta.env.BACKEND_API_URL;
 
 let success = false;
 let error = false;

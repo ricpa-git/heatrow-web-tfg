@@ -2,28 +2,36 @@
 // Este archivo protege la ruta /admin
 import { defineMiddleware } from "astro:middleware";
 
-export const onRequest = defineMiddleware(async ({ request, redirect, cookies }, next) => {
+export const onRequest = defineMiddleware(async ({ request, redirect }, next) => {
   const url = new URL(request.url);
 
   if (url.pathname.startsWith("/admin") && !url.pathname.startsWith("/admin/login")) {
-    // Comprobar si hay sesión activa preguntando al backend
+    const cookieString = request.headers.get("cookie") || "";
+
+    if (!cookieString) {
+      return redirect("/admin/login");
+    }
+
     try {
-      const cookieString = request.headers.get("cookie") || "";
-      const res = await fetch(`${import.meta.env.PUBLIC_API_URL}/auth/me`, {
-        credentials: "include",
+      const res = await fetch(`${import.meta.env.BACKEND_API_URL}/auth/me`, {
         headers: {
           cookie: cookieString,
-          "Content-Type": "application/json"
         }
       });
 
-      if (!res.ok) return redirect("/admin/login");
+      if (!res.ok) {
+        console.warn("[middleware] /auth/me returned", res.status);
+        return redirect("/admin/login");
+      }
 
       const data = await res.json();
-      if (data.role !== "admin") return redirect("/admin/login");
+      if (data.role !== "admin") {
+        console.warn("[middleware] role mismatch:", data.role);
+        return redirect("/admin/login");
+      }
 
     } catch (error) {
-      console.error("Auth error:", error);
+      console.error("[middleware] Auth error:", error);
       return redirect("/admin/login");
     }
   }

@@ -2,7 +2,9 @@
 import Layout from "../../layouts/Layout.astro";
 ---
 
-<Layout title="HEATROW CLUB | Stripe Demo">
+<Layout title="HEATROW CLUB | Compra de entradas">
+  <div id="stripe-meta" data-pk={import.meta.env.PUBLIC_STRIPE_KEY ?? ''} class="hidden"></div>
+
   <main class="bg-black min-h-screen pt-56 pb-20 px-4">
     <div class="max-w-6xl mx-auto">
       <div class="stripe-shell border border-zinc-800 bg-zinc-950/80">
@@ -12,7 +14,7 @@ import Layout from "../../layouts/Layout.astro";
             <span class="text-zinc-700">/</span>
             <span class="text-zinc-500 text-sm uppercase tracking-widest">Compra de entradas</span>
           </div>
-          <span class="text-zinc-500 text-xs uppercase tracking-[0.2em]">Demo ficticia para TFG</span>
+          <span class="text-zinc-500 text-xs uppercase tracking-[0.2em]">Pago seguro con Stripe</span>
         </header>
 
         <div class="stripe-stepper" aria-label="Progreso de compra">
@@ -34,6 +36,8 @@ import Layout from "../../layouts/Layout.astro";
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-4 md:p-6">
           <section class="space-y-3" aria-live="polite">
+
+            <!-- Step 1: ticket selection -->
             <div class="stripe-card" data-step-panel="1">
               <h2 class="panel-title">Selecciona tus entradas</h2>
 
@@ -62,59 +66,60 @@ import Layout from "../../layouts/Layout.astro";
               </div>
             </div>
 
+            <!-- Step 2: personal data -->
             <div class="stripe-card hidden" data-step-panel="2">
               <h2 class="panel-title">Datos personales</h2>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <label class="field-wrap">
                   <span>Nombre</span>
-                  <input type="text" placeholder="Tu nombre" />
+                  <input id="firstName" type="text" placeholder="Tu nombre" autocomplete="given-name" />
                 </label>
                 <label class="field-wrap">
                   <span>Apellidos</span>
-                  <input type="text" placeholder="Tus apellidos" />
+                  <input id="lastName" type="text" placeholder="Tus apellidos" autocomplete="family-name" />
                 </label>
               </div>
 
               <label class="field-wrap mt-3 block">
                 <span>Email</span>
-                <input type="email" placeholder="tu@email.com" />
+                <input id="buyerEmail" type="email" placeholder="tu@email.com" autocomplete="email" />
               </label>
 
               <label class="field-wrap mt-3 block">
                 <span>Telefono</span>
-                <input type="tel" placeholder="+34 600 000 000" />
+                <input type="tel" placeholder="+34 600 000 000" autocomplete="tel" />
               </label>
             </div>
 
+            <!-- Step 3: payment (Stripe Elements) -->
             <div class="stripe-card hidden" data-step-panel="3">
               <h2 class="panel-title">Datos de pago</h2>
 
               <label class="field-wrap block">
-                <span>Numero de tarjeta</span>
-                <input type="text" placeholder="0000 0000 0000 0000" />
+                <span>Nombre en la tarjeta</span>
+                <input id="cardholderName" type="text" placeholder="TU NOMBRE" autocomplete="cc-name" />
               </label>
 
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                <label class="field-wrap">
-                  <span>Caducidad</span>
-                  <input type="text" placeholder="MM/AA" />
-                </label>
-                <label class="field-wrap">
-                  <span>CVV</span>
-                  <input type="text" placeholder="123" />
-                </label>
+              <div class="field-wrap block mt-3">
+                <span>Tarjeta de crédito o débito</span>
+                <div id="card-element"></div>
               </div>
 
-              <label class="field-wrap mt-3 block">
-                <span>Nombre en la tarjeta</span>
-                <input type="text" placeholder="TU NOMBRE" />
-              </label>
+              <div id="card-error" class="hidden mt-2 text-sm uppercase tracking-widest" style="color:#ef4444"></div>
 
-              <p class="text-xs uppercase tracking-widest text-zinc-500 mt-4">Pago seguro simulado</p>
+              <p class="text-xs uppercase tracking-widest text-zinc-500 mt-4">&#128274; Pago procesado de forma segura por Stripe</p>
             </div>
 
-            <div class="flex gap-3">
+            <!-- Success panel -->
+            <div class="stripe-card hidden" id="successPanel">
+              <p class="panel-title">¡Pago completado!</p>
+              <p class="text-white text-lg font-bold mt-2">Tus entradas están en camino.</p>
+              <p class="text-zinc-400 text-sm mt-3">Recibirás un email con tus entradas en breve. ¡Hasta pronto en HEATROW!</p>
+            </div>
+
+            <!-- Nav buttons -->
+            <div class="flex gap-3" id="navButtons">
               <button type="button" class="action-btn hidden" id="backBtn">Volver</button>
               <button type="button" class="action-btn action-btn--primary w-full" id="nextBtn">Continuar</button>
             </div>
@@ -212,6 +217,16 @@ import Layout from "../../layouts/Layout.astro";
     border-color: oklch(50.5% 0.213 27.518);
   }
 
+  .step-item.is-done {
+    color: rgb(161 161 170);
+  }
+
+  .step-item.is-done .step-dot {
+    background: oklch(25% 0.08 27.518);
+    border-color: oklch(50.5% 0.213 27.518);
+    color: oklch(70% 0.1 27.518);
+  }
+
   .stripe-card {
     border: 1px solid rgb(39 39 42);
     background: linear-gradient(180deg, rgb(11 11 12), rgb(8 8 9));
@@ -289,6 +304,23 @@ import Layout from "../../layouts/Layout.astro";
     border-color: oklch(50.5% 0.213 27.518);
   }
 
+  #card-element {
+    border: 1px solid rgb(63 63 70);
+    background: rgb(28 28 30);
+    padding: 0.72rem 0.75rem;
+    min-height: 42px;
+    transition: border-color 0.15s;
+  }
+
+  #card-element.StripeElement--focus {
+    border-color: oklch(50.5% 0.213 27.518);
+    outline: none;
+  }
+
+  #card-element.StripeElement--invalid {
+    border-color: #ef4444;
+  }
+
   .action-btn {
     border: 1px solid rgb(63 63 70);
     background: transparent;
@@ -300,7 +332,7 @@ import Layout from "../../layouts/Layout.astro";
     width: 100%;
   }
 
-  .action-btn:hover {
+  .action-btn:hover:not(:disabled) {
     border-color: white;
   }
 
@@ -309,8 +341,13 @@ import Layout from "../../layouts/Layout.astro";
     color: white;
   }
 
-  .action-btn--primary:hover {
+  .action-btn--primary:hover:not(:disabled) {
     background: oklch(50.5% 0.213 27.518);
+  }
+
+  .action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 
   @media (max-width: 640px) {
@@ -334,21 +371,63 @@ import Layout from "../../layouts/Layout.astro";
   let qtyVip = 0;
   let step = 1;
 
+  const stripePublicKey = (document.getElementById('stripe-meta') as HTMLElement | null)?.dataset.pk ?? '';
+
+  let stripeInstance: any = null;
+  let cardElement: any = null;
+
+  async function loadStripeJs(): Promise<void> {
+    if ((window as any).Stripe) {
+      stripeInstance = (window as any).Stripe(stripePublicKey);
+      return;
+    }
+    await new Promise<void>((resolve, reject) => {
+      const script = document.createElement('script');
+      script.src = 'https://js.stripe.com/v3/';
+      script.onload = () => {
+        stripeInstance = (window as any).Stripe(stripePublicKey);
+        resolve();
+      };
+      script.onerror = () => reject(new Error('No se pudo cargar Stripe.js'));
+      document.head.appendChild(script);
+    });
+  }
+
+  function mountCardElement() {
+    if (!stripeInstance || cardElement) return;
+    const elements = stripeInstance.elements();
+    cardElement = elements.create('card', {
+      style: {
+        base: {
+          color: '#ffffff',
+          fontFamily: 'ui-monospace, monospace',
+          fontSize: '15px',
+          '::placeholder': { color: '#52525b' },
+          iconColor: '#a1a1aa',
+        },
+        invalid: { color: '#ef4444', iconColor: '#ef4444' },
+      },
+      hidePostalCode: true,
+    });
+    cardElement.mount('#card-element');
+  }
+
   const qtyNodes = {
     general: document.querySelector('[data-qty="general"]'),
-    vip: document.querySelector('[data-qty="vip"]')
+    vip: document.querySelector('[data-qty="vip"]'),
   };
 
   const lineItems = document.querySelector('[data-line-items]');
   const lineTotal = document.querySelector('[data-line-total]');
   const grandTotal = document.querySelector('[data-grand-total]');
-  const nextBtn = document.getElementById('nextBtn');
-  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn') as HTMLButtonElement | null;
+  const backBtn = document.getElementById('backBtn') as HTMLButtonElement | null;
+  const navButtons = document.getElementById('navButtons');
 
-  const stepPanels = {
+  const stepPanels: Record<number, Element | null> = {
     1: document.querySelector('[data-step-panel="1"]'),
     2: document.querySelector('[data-step-panel="2"]'),
-    3: document.querySelector('[data-step-panel="3"]')
+    3: document.querySelector('[data-step-panel="3"]'),
   };
 
   function formatEur(value: number) {
@@ -357,7 +436,7 @@ import Layout from "../../layouts/Layout.astro";
 
   function renderSummary() {
     const total = qtyGeneral * priceGeneral + qtyVip * priceVip;
-    const lines = [];
+    const lines: string[] = [];
 
     if (qtyGeneral > 0) lines.push(`General x ${qtyGeneral}`);
     if (qtyVip > 0) lines.push(`VIP x ${qtyVip}`);
@@ -372,8 +451,9 @@ import Layout from "../../layouts/Layout.astro";
 
   function renderStep() {
     document.querySelectorAll('[data-step-indicator]').forEach((el) => {
-      const indicatorStep = Number(el.getAttribute('data-step-indicator'));
-      el.classList.toggle('is-active', indicatorStep === step);
+      const n = Number(el.getAttribute('data-step-indicator'));
+      el.classList.toggle('is-active', n === step);
+      el.classList.toggle('is-done', n < step);
     });
 
     Object.entries(stepPanels).forEach(([key, panel]) => {
@@ -384,12 +464,16 @@ import Layout from "../../layouts/Layout.astro";
     if (backBtn) backBtn.classList.toggle('hidden', step === 1);
 
     if (nextBtn) {
-      if (step < 3) {
-        nextBtn.textContent = 'Continuar';
-      } else {
-        nextBtn.textContent = 'Confirmar pago';
-      }
+      nextBtn.textContent = step < 3 ? 'Continuar' : 'Confirmar pago';
     }
+
+    if (step === 3) mountCardElement();
+  }
+
+  function showSuccess() {
+    Object.values(stepPanels).forEach((p) => p?.classList.add('hidden'));
+    if (navButtons) navButtons.classList.add('hidden');
+    document.getElementById('successPanel')?.classList.remove('hidden');
   }
 
   document.querySelectorAll('[data-action]').forEach((btn) => {
@@ -416,16 +500,57 @@ import Layout from "../../layouts/Layout.astro";
     renderStep();
   });
 
-  nextBtn?.addEventListener('click', () => {
+  nextBtn?.addEventListener('click', async () => {
     if (step < 3) {
       step += 1;
       renderStep();
       return;
     }
 
-    alert('Pago simulado completado. Esta pantalla es solo una demo visual para el TFG.');
+    const errorDiv = document.getElementById('card-error');
+    if (errorDiv) { errorDiv.textContent = ''; errorDiv.classList.add('hidden'); }
+
+    const total = qtyGeneral * priceGeneral + qtyVip * priceVip;
+    if (total <= 0) {
+      if (errorDiv) { errorDiv.textContent = 'Selecciona al menos una entrada.'; errorDiv.classList.remove('hidden'); }
+      return;
+    }
+
+    if (nextBtn) { nextBtn.disabled = true; nextBtn.textContent = 'Procesando...'; }
+
+    try {
+      const intentRes = await fetch('/api/payments/create-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amountCents: total * 100 }),
+      });
+
+      if (!intentRes.ok) throw new Error('Error al iniciar el pago. Inténtalo de nuevo.');
+
+      const { clientSecret } = await intentRes.json();
+      const cardholderName = (document.getElementById('cardholderName') as HTMLInputElement | null)?.value ?? '';
+
+      const result = await stripeInstance.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: cardElement,
+          billing_details: { name: cardholderName },
+        },
+      });
+
+      if (result.error) {
+        if (errorDiv) { errorDiv.textContent = result.error.message; errorDiv.classList.remove('hidden'); }
+        if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Confirmar pago'; }
+      } else if (result.paymentIntent?.status === 'succeeded') {
+        showSuccess();
+      }
+    } catch (err: any) {
+      const msg = err?.message ?? 'Error de conexión. Inténtalo de nuevo.';
+      if (errorDiv) { errorDiv.textContent = msg; errorDiv.classList.remove('hidden'); }
+      if (nextBtn) { nextBtn.disabled = false; nextBtn.textContent = 'Confirmar pago'; }
+    }
   });
 
+  loadStripeJs().catch(console.error);
   renderSummary();
   renderStep();
 </script>

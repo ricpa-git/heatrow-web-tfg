@@ -15,6 +15,7 @@ namespace tfgBackend.Data
         public DbSet<Event> Events { get; set; }
         public DbSet<Subscriber> Subscribers { get; set; }
         public DbSet<EventDj> events_djs { get; set; }
+        public DbSet<GalleryItem> GalleryItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,6 +63,8 @@ namespace tfgBackend.Data
         public string? Image { get; set; }
         public string? Dice_Link { get; set; }
         public DateTime? Created_At { get; set; }
+        public bool IsActive { get; set; } = true;
+        public string? TimeSlot { get; set; }
         public ICollection<EventDj> events_djs { get; set; }
     }
 
@@ -80,5 +83,19 @@ namespace tfgBackend.Data
         [Column("subscribed_at")]
         public DateTime? SubscribedAt { get; set; }
         public bool Active { get; set; }
+    }
+
+    [Table("gallery_items")]
+    public class GalleryItem
+    {
+        public int Id { get; set; }
+        public string? Title { get; set; }
+        public string? Type { get; set; }
+        [Column("file_path")]
+        public string? FilePath { get; set; }
+        [Column("created_at")]
+        public DateTime CreatedAt { get; set; }
+        [Column("is_active")]
+        public bool IsActive { get; set; } = true;
     }
 }

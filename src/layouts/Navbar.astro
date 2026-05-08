@@ -1,6 +1,5 @@
 ---
-import TicketsDropdown from '../components/TicketsDropdown.astro';
-import { events } from '../lib/events';
+import TicketsDropdownClient from '../components/TicketsDropdownClient.tsx';
 
 const currentPath = Astro.url.pathname;
 
@@ -13,7 +12,7 @@ const navLinks = [
 ---
 
 <!-- Navbar -->
-<nav class="fixed top-0 w-full bg-black z-50 shadow-lg">
+<nav class="fixed top-0 w-full bg-black z-50">
   <div class="w-full px-8">
     <div class="flex justify-between items-center h-32">
       <div class="hidden xl:flex gap-8">
@@ -25,9 +24,9 @@ const navLinks = [
             {link.label}
           </a>
         ))}
-        <TicketsDropdown />
+        <TicketsDropdownClient client:load />
       </div>
-
+      
       <!-- Logo centrado -->
       <a href="/" class="absolute left-1/2 -translate-x-1/2">
         <img src="/logo1.png" alt="Heatrow Club" class="h-28 w-auto" />
@@ -68,18 +67,10 @@ const navLinks = [
         ))}
         
         <!-- Tickets submenu para móvil -->
-        <div class="nav-link opacity-0 translate-y-4">
+        <div class="nav-link opacity-0 translate-y-4 pb-8">
           <p class="text-3xl sm:text-5xl font-black uppercase tracking-widest text-[oklch(50.5%_0.213_27.518)] mb-4">TICKETS</p>
-          <div class="space-y-3 pl-4 border-l border-[oklch(50.5%_0.213_27.518)]/40">
-            {events.map((event) => (
-              <a
-                href={`/tickets/${event.slug}`}
-                class="block text-lg font-bold tracking-wide text-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors"
-              >
-                <div>{event.title}</div>
-                <div class="text-xs opacity-70">{event.date}</div>
-              </a>
-            ))}
+          <div id="mobile-tickets-list" class="space-y-3 pl-4 border-l border-[oklch(50.5%_0.213_27.518)]/40">
+            <!-- populated by script -->
           </div>
         </div>
       </div>
@@ -137,21 +128,60 @@ const navLinks = [
 </nav>
 
 <!-- Ticker / Marquee -->
-<div id="ticker-bar" class="fixed top-32 w-full z-40 overflow-hidden bg-[oklch(50.5%_0.213_27.518)] py-3 cursor-pointer">
+<div id="ticker-bar" class="fixed top-32 w-full z-40 overflow-hidden bg-[oklch(50.5%_0.213_27.518)] py-3">
   <div class="ticker-track flex whitespace-nowrap">
     <span class="ticker-content text-white font-bold uppercase text-sm tracking-widest">
-      HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp;
+      HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp;
     </span>
     <span class="ticker-content text-white font-bold uppercase text-sm tracking-widest" aria-hidden="true">
-      HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp; HEATROW CLUB 30/07 // &ldquo;KANYE WEST AFTER CONCERT&rdquo; &nbsp;&mdash;&nbsp;
+      HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp; HEATROW CLUB &nbsp;&mdash;&nbsp; THE MUSIC THEY DON'T PLAY &nbsp;&mdash;&nbsp;
     </span>
   </div>
 </div>
 
 <script>
-  document.getElementById('ticker-bar')?.addEventListener('click', () => {
-    window.location.href = '/tickets/evento-1';
-  });
+  // Populate mobile tickets list from API
+  (async () => {
+    const list = document.getElementById('mobile-tickets-list');
+    if (!list) return;
+    try {
+      const res = await fetch('/api/events');
+      if (!res.ok) return;
+      const events: Array<{ id: number; title: string; date: string }> = await res.json();
+      list.innerHTML = events.map(ev => {
+        const d = new Date(ev.date);
+        const fmt = `${String(d.getUTCDate()).padStart(2,'0')}/${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+        return `<a href="/tickets/${ev.id}" class="block text-lg font-bold tracking-wide text-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors"><div>${ev.title}</div><div class="text-xs opacity-70">${fmt}</div></a>`;
+      }).join('');
+    } catch { /* silently fail */ }
+  })();
+
+  // Ticker dinámico desde API
+  (async () => {
+    const tickerBar = document.getElementById('ticker-bar');
+    if (!tickerBar) return;
+    try {
+      const res = await fetch('/api/events');
+      if (!res.ok) return;
+      const events: Array<{ id: number; title: string; date: string }> = await res.json();
+      if (events.length === 0) return;
+
+      const ev = events[0];
+      const d = new Date(ev.date);
+      const fmt = `${String(d.getUTCDate()).padStart(2,'0')}/${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+      const segment = `HEATROW CLUB ${fmt} // "${ev.title.toUpperCase()}"  —  `;
+      const repeated = segment.repeat(8);
+
+      tickerBar.querySelectorAll('.ticker-content').forEach(el => {
+        el.textContent = repeated;
+      });
+
+      tickerBar.classList.add('cursor-pointer');
+      tickerBar.addEventListener('click', () => {
+        window.location.href = `/tickets/${ev.id}`;
+      });
+    } catch { /* silently fail, mantiene el texto por defecto */ }
+  })();
 
   const mobileBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');

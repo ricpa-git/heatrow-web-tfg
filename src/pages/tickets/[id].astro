@@ -1,0 +1,196 @@
+---
+export const prerender = false;
+import Layout from "../../layouts/Layout.astro";
+
+const { id } = Astro.params;
+
+let event: any = null;
+
+try {
+  const res = await fetch(`http://localhost:5257/api/events/${id}`);
+  if (res.status === 404) return Astro.redirect('/404');
+  if (!res.ok) throw new Error('API error');
+  event = await res.json();
+} catch {
+  return Astro.redirect('/404');
+}
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  return `${day}/${month}`;
+}
+
+const formattedDate = formatDate(event.date);
+const isVideo = event.image && /\.(mp4|webm|ogg)$/i.test(event.image);
+const hasLink = event.dice_Link && event.dice_Link.trim() !== '';
+const shareUrl = hasLink ? event.dice_Link : '';
+---
+
+<Layout title={`HEATROW CLUB | ${event.title}`}>
+  <main class="bg-black pb-24 pt-20">
+    <div class="flex flex-col md:flex-row min-h-screen pt-40">
+
+      <!-- Poster / Video -->
+      <div class="w-full md:w-1/2 flex items-stretch px-6 py-4 md:pl-8 md:px-0 md:py-0">
+        {event.image ? (
+          isVideo ? (
+            <video
+              autoplay
+              muted
+              loop
+              playsinline
+              class="w-full aspect-[3/4] object-cover border border-red-600"
+            >
+              <source src={event.image} type="video/mp4" />
+              Tu navegador no soporta el elemento video
+            </video>
+          ) : (
+            <img
+              src={event.image}
+              alt={event.title}
+              class="w-full aspect-[3/4] object-cover border border-red-600"
+            />
+          )
+        ) : (
+          <div class="w-full aspect-[3/4] border border-red-600 bg-zinc-900/70 flex items-center justify-center">
+            <span class="text-zinc-300 text-3xl md:text-4xl font-black uppercase tracking-wider text-center">
+              PROXIMAMENTE...
+            </span>
+          </div>
+        )}
+      </div>
+
+      <!-- Info -->
+      <div class="w-full md:w-1/2 flex flex-col justify-start px-10 md:px-16 pt-0 pb-12 gap-6">
+        <h1 class="text-3xl md:text-4xl font-black text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide leading-tight">
+          &ldquo;{event.title}&rdquo;
+        </h1>
+
+        <!-- Date/location grid -->
+        <div class="flex text-white text-sm border-t border-zinc-700">
+          <div class="flex-1 border-r border-zinc-700 py-3 pr-6 uppercase">
+            {event.location ?? '—'}
+          </div>
+          <div class="flex-1 border-r border-zinc-700 py-3 px-6">
+            {formattedDate}
+          </div>
+          <div class="flex-1 py-3 pl-6 text-white-400">
+            {event.timeSlot ?? '—'}
+          </div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-wrap items-center gap-3 sm:gap-4">
+          {hasLink ? (
+            <a
+              href={event.dice_Link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest px-6 py-3 w-fit"
+            >
+              COMPRAR ENTRADAS
+            </a>
+          ) : (
+            <a
+              href={`/tickets/tickets-stripe?eventId=${event.id}`}
+              class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors text-xs font-bold uppercase tracking-widest px-6 py-3 w-fit"
+            >
+              COMPRAR ENTRADAS
+            </a>
+          )}
+
+          <button
+            id="share-ticket-btn"
+            type="button"
+            data-share-url={shareUrl}
+            class="inline-flex items-center justify-center w-11 h-11 border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white transition-colors"
+            aria-label="Compartir entrada"
+            title="Compartir entrada"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 3h7v7" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M10 14L21 3" stroke-linecap="round" stroke-linejoin="round"></path>
+              <path d="M21 14v6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h6" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Description -->
+        {event.description && (
+          <p class="text-zinc-400 text-md leading-relaxed max-w-md uppercase">
+            {event.description}
+          </p>
+        )}
+
+        <!-- DJs -->
+        {event.djs && event.djs.length > 0 && (
+          <div class="border-t border-zinc-700 pt-4">
+            <p class="text-xs uppercase tracking-widest text-zinc-500 mb-2">Line-up</p>
+            <div class="flex flex-wrap gap-2">
+              {event.djs.map((dj: { id: number; name: string }) => (
+                <span class="text-sm font-bold text-[oklch(50.5%_0.213_27.518)] uppercase tracking-wide">
+                  {dj.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </main>
+
+  <script>
+    function showToast(message: string) {
+      const toast = document.createElement('div');
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 2rem;
+        left: 50%;
+        transform: translateX(-50%) translateY(1rem);
+        background: #18181b;
+        color: #fff;
+        border: 1px solid oklch(50.5% 0.213 27.518);
+        padding: 0.65rem 1.4rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 9999;
+        pointer-events: none;
+      `;
+      document.body.appendChild(toast);
+      requestAnimationFrame(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateX(-50%) translateY(0)';
+      });
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(-50%) translateY(1rem)';
+        setTimeout(() => toast.remove(), 200);
+      }, 2500);
+    }
+
+    const btn = document.getElementById('share-ticket-btn') as HTMLButtonElement | null;
+    if (btn) {
+      btn.addEventListener('click', async () => {
+        const url = btn.dataset.shareUrl?.trim() || window.location.href;
+        try {
+          if (navigator.share) {
+            await navigator.share({ url });
+          } else {
+            await navigator.clipboard.writeText(url);
+            showToast('Enlace copiado al portapapeles');
+          }
+        } catch {
+          // user cancelled or clipboard unavailable
+        }
+      });
+    }
+  </script>
+</Layout>

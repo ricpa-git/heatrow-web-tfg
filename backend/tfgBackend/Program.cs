@@ -17,6 +17,16 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddControllers();
+
+// Permitir uploads de hasta ~110MB (videos hasta 100MB + overhead multipart)
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(options =>
+{
+    options.MultipartBodyLengthLimit = 110L * 1024 * 1024;
+});
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 110L * 1024 * 1024;
+});
 builder.Services.AddDbContext<tfgBackend.Data.HeatrowDbContext>(options =>
     options.UseMySql(
         builder.Configuration.GetConnectionString("DefaultConnection"),

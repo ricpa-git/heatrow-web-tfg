@@ -1,72 +1,33 @@
 import { useState, useEffect } from "react";
 
-const imageFiles = [
-  { name: "foto1.png", type: "image" },
-  { name: "foto2.png", type: "image" },
-  { name: "foto3.png", type: "image" },
-  { name: "foto4.png", type: "image" },
-  { name: "foto5.jpeg", type: "image" },
-  { name: "foto5.png", type: "image" },
-  { name: "foto6.png", type: "image" },
-  { name: "foto7.png", type: "image" },
-  { name: "foto8.jpeg", type: "image" },
-  { name: "foto9.jpeg", type: "image" },
-  { name: "foto10.jpeg", type: "image" },
-  { name: "foto11.jpeg", type: "image" },
-  { name: "foto12.jpeg", type: "image" },
-  { name: "foto13.jpeg", type: "image" },
-  { name: "foto14.jpeg", type: "image" },
-  { name: "foto15.jpeg", type: "image" },
-  { name: "foto16.jpeg", type: "image" },
-  { name: "foto17.jpeg", type: "image" },
-  { name: "foto18.jpeg", type: "image" },
-  { name: "foto19.jpeg", type: "image" },
-  { name: "foto20.jpeg", type: "image" },
-  { name: "foto21.jpeg", type: "image" },
-  { name: "foto22.jpeg", type: "image" },
-  { name: "foto23.jpeg", type: "image" },
-  { name: "foto25.jpeg", type: "image" },
-  { name: "foto28.jpeg", type: "image" },
-  { name: "foto29.jpeg", type: "image" },
-  { name: "foto30.jpeg", type: "image" },
-  { name: "foto31.jpeg", type: "image" },
-  { name: "foto32.jpeg", type: "image" },
-  { name: "foto33.jpeg", type: "image" },
-  { name: "foto34.jpeg", type: "image" },
-  { name: "foto35.jpeg", type: "image" },
-  { name: "foto36.jpeg", type: "image" },
-  { name: "foto37.jpeg", type: "image" },
-  { name: "foto38.jpeg", type: "image" },
-  { name: "foto39.jpeg", type: "image" },
-  { name: "foto40.jpeg", type: "image" },
-  { name: "foto41.jpeg", type: "image" },
-  { name: "foto42.jpeg", type: "image" },
-  { name: "foto43.jpeg", type: "image" },
-  { name: "foto44.jpeg", type: "image" },
-  { name: "foto45.jpeg", type: "image" },
-  { name: "foto46.jpeg", type: "image" },
-  { name: "foto47.jpeg", type: "image" },
-  { name: "foto48.jpeg", type: "image" },
-  { name: "foto49.jpeg", type: "image" },
-  { name: "foto50.jpeg", type: "image" },
-  { name: "foto51.jpeg", type: "image" },
-  { name: "foto52.jpeg", type: "image" },
-];
-
-const images = imageFiles.map((item) => ({
-  src: `/gallery/${item.name}`,
-  alt: "Heatrow Club",
-  type: item.type,
-}));
+const API_URL = import.meta.env.PUBLIC_API_URL || "http://localhost:5257/api";
 
 export default function Gallery() {
+  const [items, setItems] = useState([]);
   const [lightbox, setLightbox] = useState(null);
   const [loaded, setLoaded] = useState(false);
   const [filter, setFilter] = useState("all");
 
-  const filteredImages = filter === "all" 
-    ? images 
-    : images.filter(img => img.type === filter);
+  useEffect(() => {
+    fetch(`${API_URL}/gallery`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        const active = (data || [])
+          .filter(i => i.isActive)
+          .map(i => ({
+            src: i.filePath,
+            alt: i.title || "Heatrow Club",
+            type: i.type === "photo" ? "image" : "video",
+          }));
+        setItems(active);
+        setLoaded(true);
+      })
+      .catch(() => setLoaded(true));
+  }, []);
+
+  const filteredImages = filter === "all"
+    ? items
+    : items.filter(img => img.type === filter);
 
   const handleDownload = (imageSrc) => {
     const extension = imageSrc.split(".").pop() || "jpg";
@@ -79,8 +40,6 @@ export default function Gallery() {
   };
 
   useEffect(() => {
-    setLoaded(true);
-
     const handleKey = (e) => {
       if (e.key === "Escape") setLightbox(null);
       if (e.key === "ArrowRight") setLightbox(i => i < filteredImages.length - 1 ? i + 1 : 0);
@@ -126,12 +85,31 @@ export default function Gallery() {
             style={{ transitionDelay: `${index * 35}ms` }}
             onClick={() => setLightbox(index)}
           >
-            <img
-              src={img.src}
-              alt={img.alt}
-              className="w-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:grayscale"
-              loading="lazy"
-            />
+            {img.type === "video" ? (
+              <div className="relative w-full">
+                <video
+                  src={img.src}
+                  className="w-full object-cover transition-all duration-500 group-hover:scale-105"
+                  muted
+                  playsInline
+                  preload="metadata"
+                />
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="bg-black/50 rounded-full p-4">
+                    <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <img
+                src={img.src}
+                alt={img.alt}
+                className="w-full object-cover transition-all duration-500 group-hover:scale-105 group-hover:grayscale"
+                loading="lazy"
+              />
+            )}
             {/* Overlay rojo en hover */}
             <div
               className="absolute inset-0 transition-all duration-300 flex items-center justify-center opacity-0 group-hover:opacity-100"
@@ -145,13 +123,13 @@ export default function Gallery() {
       ) : (
         <div className="text-center py-16">
           <p className="text-zinc-400 text-lg uppercase tracking-widest">
-            No hay {filter === "video" ? "videos" : "imágenes"} disponibles aún
+            {loaded ? `No hay ${filter === "video" ? "videos" : "imágenes"} disponibles aún` : "Cargando..."}
           </p>
         </div>
       )}
 
       {/* Lightbox */}
-      {lightbox !== null && (
+      {lightbox !== null && filteredImages[lightbox] && (
         <div
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center"
           onClick={() => setLightbox(null)}
@@ -168,7 +146,7 @@ export default function Gallery() {
           <button
             className="absolute top-6 right-20 text-white hover:text-[oklch(50.5%_0.213_27.518)] transition z-50 flex items-center justify-center h-9"
             onClick={(e) => { e.stopPropagation(); handleDownload(filteredImages[lightbox].src); }}
-            title="Descargar imagen"
+            title="Descargar"
           >
             <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -183,13 +161,23 @@ export default function Gallery() {
             ‹
           </button>
 
-          {/* Imagen */}
-          <img
-            src={filteredImages[lightbox].src}
-            alt={filteredImages[lightbox].alt}
-            className="max-h-[90vh] max-w-[90vw] object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          {/* Media */}
+          {filteredImages[lightbox].type === "video" ? (
+            <video
+              src={filteredImages[lightbox].src}
+              className="max-h-[90vh] max-w-[90vw] object-contain"
+              controls
+              autoPlay
+              onClick={(e) => e.stopPropagation()}
+            />
+          ) : (
+            <img
+              src={filteredImages[lightbox].src}
+              alt={filteredImages[lightbox].alt}
+              className="max-h-[90vh] max-w-[90vw] object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          )}
 
           {/* Botón siguiente */}
           <button

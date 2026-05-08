@@ -1,11 +1,18 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import DemoPopup from "../components/ui/DemoPopup.astro";
+import { getEvents } from "../lib/events";
+
+const events = await getEvents();
+
+function formatDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  const day = String(d.getUTCDate()).padStart(2, '0');
+  const month = String(d.getUTCMonth() + 1).padStart(2, '0');
+  return `${day}/${month}`;
+}
 ---
 
 <Layout title="HEATROW CLUB | Home">
-  <DemoPopup />
-
   <!--Estilos para que el logo gire -->
   <style>
     @keyframes spin-slow {
@@ -195,6 +202,12 @@ import DemoPopup from "../components/ui/DemoPopup.astro";
       </h2>
       <div class="w-32 h-1 bg-[oklch(50.5%_0.213_27.518)] mx-auto mb-16"></div>
 
+      {events.length === 0 ? (
+        <p class="text-center text-white font-black text-lg md:text-lg uppercase tracking-widest py-16">
+          EVENTS COMING SOON
+        </p>
+      ) : (
+        <>
       <div
         class="md:hidden flex items-center justify-center gap-2 mb-5 text-[11px] uppercase tracking-[0.2em] text-zinc-400"
       >
@@ -207,99 +220,61 @@ import DemoPopup from "../components/ui/DemoPopup.astro";
         id="events-scroller"
         class="events-scroller flex gap-6 overflow-x-auto pb-4"
       >
-      <!-- CADA ARTICLE ES UN EVENTO -->
-        <article
-          class="event-card flex-shrink-0 w-[82vw] sm:w-[62vw] md:w-[44vw] lg:w-[26vw] xl:w-[22vw] max-w-[340px] cursor-pointer"
-          data-event="kanye"
-          data-active="true"
-        >
-          <div class="flex flex-col">
-            <div class="relative w-full aspect-[3/4] border border-red-600 overflow-hidden">
-              <video
-                autoplay
-                muted
-                loop
-                playsinline
-                class="absolute inset-0 w-full h-full object-cover object-center block"
-              >
-                <source src="/videoye.mp4" type="video/mp4" />
-                Tu navegador no soporta el elemento video
-              </video>
-            </div>
-            <div class="mt-4">
-              <p
-                class="text-white font-black text-xl uppercase leading-tight mb-3"
-              >
-                KANYE WEST AFTER CONCERT<br />TEATRO MAGNO, MADRID - 30/07
-              </p>
-              <a
-                href="/tickets/evento-1"
-                class="purchase-link inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-              >
-                COMPRAR ENTRADA
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <article
-          class="event-card flex-shrink-0 w-[82vw] sm:w-[62vw] md:w-[44vw] lg:w-[26vw] xl:w-[22vw] max-w-[340px] cursor-pointer"
-          data-active="false"
-        >
-          <div class="flex flex-col">
-            <div
-              class="w-full aspect-[3/4] border border-red-600 bg-zinc-900/70 flex items-center justify-center"
-              aria-label="Proximamente"
+        {events.map((event, index) => {
+          const isVideo = event.image && /\.(mp4|webm|ogg)$/i.test(event.image);
+          const hasLink = event.dice_Link && event.dice_Link.trim() !== '';
+          return (
+            <article
+              class="event-card flex-shrink-0 w-[82vw] sm:w-[62vw] md:w-[44vw] lg:w-[26vw] xl:w-[22vw] max-w-[340px] cursor-pointer"
+              data-active={index === 0 ? "true" : "false"}
             >
-              <span class="text-zinc-300 text-lg md:text-xl font-black uppercase tracking-wider">
-                PROXIMAMENTE...
-              </span>
-            </div>
-            <div class="mt-4">
-              <p
-                class="text-white font-black text-xl uppercase leading-tight mb-3"
-              >
-                ?????<br />SALA CLA  ORES, MADRID - 05/05
-              </p>
-              <a
-                href="/tickets/evento-2"
-                class="purchase-link inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-              >
-                COMPRAR ENTRADA
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- <article
-          class="event-card flex-shrink-0 w-[82vw] sm:w-[62vw] md:w-[44vw] lg:w-[26vw] xl:w-[22vw] max-w-[340px] cursor-pointer"
-          data-active="false"
-        >
-          <div class="flex flex-col">
-            <div
-              class="w-full aspect-[3/4] border border-red-600 bg-zinc-900/70 flex items-center justify-center"
-              aria-label="Proximamente"
-            >
-              <span class="text-zinc-300 text-lg md:text-xl font-black uppercase tracking-wider">
-                PROXIMAMENTE...
-              </span>
-            </div>
-            <div class="mt-4">
-              <p
-                class="text-white font-black text-xl uppercase leading-tight mb-3"
-              >
-                SUMMER HEAT SESSION<br />TEATRO MAGNO, MADRID - 24/08
-              </p>
-              <!-- <a
-                href="/tickets"
-                class="inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
-              >
-                COMPRAR ENTRADA
-              </a> -->
-            </div>
-          </div>
-        </article>
+              <div class="flex flex-col">
+                <div class="relative w-full aspect-[3/4] border border-red-600 overflow-hidden">
+                  {event.image ? (
+                    isVideo ? (
+                      <video
+                        autoplay
+                        muted
+                        loop
+                        playsinline
+                        class="absolute inset-0 w-full h-full object-cover object-center block"
+                      >
+                        <source src={event.image} type="video/mp4" />
+                        Tu navegador no soporta el elemento video
+                      </video>
+                    ) : (
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        class="absolute inset-0 w-full h-full object-cover object-center block"
+                      />
+                    )
+                  ) : (
+                    <div class="absolute inset-0 bg-zinc-900/70 flex items-center justify-center">
+                      <span class="text-zinc-300 text-lg md:text-xl font-black uppercase tracking-wider">
+                        PROXIMAMENTE...
+                      </span>
+                    </div>
+                  )}
+                </div>
+                <div class="mt-4">
+                  <p class="text-white font-black text-xl uppercase leading-tight mb-3">
+                    {event.title}<br />{event.location} - {formatDate(event.date)}
+                  </p>
+                  <a
+                    href={`/tickets/${event.id}`}
+                    class="purchase-link inline-block border border-[oklch(50.5%_0.213_27.518)] text-[oklch(50.5%_0.213_27.518)] hover:bg-[oklch(50.5%_0.213_27.518)] hover:text-white text-xs font-bold uppercase tracking-widest px-6 py-3 transition-colors w-fit"
+                  >
+                    COMPRAR ENTRADA
+                  </a>
+                </div>
+              </div>
+            </article>
+          );
+        })}
       </div>
+        </>
+      )}
     </div>
     <!-- <DjsSection client:load /> -->
   </section>

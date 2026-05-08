@@ -1,9 +1,28 @@
 ---
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
+
+const eventId = Astro.url.searchParams.get('eventId');
+if (!eventId) return Astro.redirect('/404');
+
+const apiUrl = import.meta.env.BACKEND_API_URL ?? 'http://localhost:5257/api';
+let event: any = null;
+try {
+  const res = await fetch(`${apiUrl}/events/${eventId}`);
+  if (!res.ok) return Astro.redirect('/404');
+  event = await res.json();
+} catch {
+  return Astro.redirect('/404');
+}
+
+function formatEventDate(dateStr: string): string {
+  const d = new Date(dateStr);
+  return d.toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
+}
 ---
 
 <Layout title="HEATROW CLUB | Compra de entradas">
-  <div id="stripe-meta" data-pk={import.meta.env.PUBLIC_STRIPE_KEY ?? ''} class="hidden"></div>
+  <div id="stripe-meta" data-pk={import.meta.env.PUBLIC_STRIPE_KEY ?? ''} data-event-id={event.id} class="hidden"></div>
 
   <main class="bg-black min-h-screen pt-56 pb-20 px-4">
     <div class="max-w-6xl mx-auto">
@@ -126,9 +145,9 @@ import Layout from "../../layouts/Layout.astro";
           </section>
 
           <aside class="stripe-card h-fit">
-            <h3 class="text-[oklch(50.5%_0.213_27.518)] font-black text-2xl uppercase mb-2">"KANYE WEST AFTER CONCERT"</h3>
-            <p class="text-zinc-300 text-1xl uppercase tracking-wider">Teatro Magno, Madrid</p>
-            <p class="text-zinc-400 text-xl mt-1">30 Jul 2026 - 00:00</p>
+            <h3 class="text-[oklch(50.5%_0.213_27.518)] font-black text-2xl uppercase mb-2">"{event.title}"</h3>
+            <p class="text-zinc-300 text-1xl uppercase tracking-wider">{event.location}</p>
+            <p class="text-zinc-400 text-xl mt-1">{formatEventDate(event.date)} · {event.timeSlot ?? '—'}</p>
 
             <div class="h-px bg-zinc-800 my-4"></div>
 

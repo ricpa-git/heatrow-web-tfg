@@ -19,8 +19,8 @@ export default function BienvenidaUsuario() {
   }, []);
 
   return (
-    <p className="text-zinc-400 mb-8">
-      {username ? `Bienvenido de nuevo, ${username}` : "Bienvenido al panel de Heatrow Club"}
+    <p className="text-zinc-500 text-sm mb-8">
+      {username ? `Sesión iniciada como ${username}` : "Panel de administración"}
     </p>
   );
 }

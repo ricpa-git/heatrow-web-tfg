@@ -62,6 +62,28 @@ namespace tfgBackend.Controllers
             return Ok(new { message = "Logout correcto" });
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        {
+            var exists = await _db.Users.AnyAsync(u => u.Username == request.Username);
+            if (exists)
+                return Conflict(new { message = "El usuario ya existe" });
+
+            var user = new User
+            {
+                Username = request.Username,
+                Email = request.Email,
+                Password = request.PasswordHash,
+                Role = "admin",
+                Created_At = DateTime.UtcNow
+            };
+
+            _db.Users.Add(user);
+            await _db.SaveChangesAsync();
+
+            return Ok(new { message = "Usuario creado correctamente", user.Id, user.Username });
+        }
+
         [HttpGet("me")]
         public IActionResult Me()
         {
@@ -100,5 +122,12 @@ namespace tfgBackend.Controllers
     {
         public string Username { get; set; }
         public string Password { get; set; }
+    }
+
+    public class RegisterRequest
+    {
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
     }
 }

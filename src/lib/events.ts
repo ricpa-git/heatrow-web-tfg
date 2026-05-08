@@ -1,37 +1,22 @@
 export interface Event {
-  id: string;
-  slug: string;
+  id: number;
   title: string;
-  venue: string;
+  description: string;
   date: string;
-  time: string;
-  fourvenuesUrl: string;
-  videoUrl: string;
+  location: string;
+  image: string;
+  dice_Link: string;
+  timeSlot: string;
+  djs: Array<{ id: number; name: string }>;
 }
 
-export const events: Event[] = [
-  {
-    id: "1",
-    slug: "evento-1",
-    title: '"KANYE WEST AFTER CONCERT"',
-    venue: "TEATRO MAGNO, MADRID",
-    date: "30/07",
-    time: "00:00 a 7:30",
-    fourvenuesUrl: "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA",
-    videoUrl: "/videoye.mp4"
-  },
-  {
-    id: "2",
-    slug: "evento-2",
-    title: "?????",
-    venue: "SALA CLAMORES, MADRID",
-    date: "05/05",
-    time: "TBD",
-    fourvenuesUrl: "https://web.fourvenues.com/es/bao-bao/events/heatrow-ii-273-baobao-27-03-2026-WTXA",
-    videoUrl: "/videoye.mp4"
+export async function getEvents(): Promise<Event[]> {
+  const apiUrl = import.meta.env.BACKEND_API_URL ?? 'http://localhost:5257/api';
+  try {
+    const res = await fetch(`${apiUrl}/events`);
+    if (!res.ok) return [];
+    return res.json();
+  } catch {
+    return [];
   }
-];
-
-export function getEventBySlug(slug: string): Event | undefined {
-  return events.find(event => event.slug === slug);
 }
